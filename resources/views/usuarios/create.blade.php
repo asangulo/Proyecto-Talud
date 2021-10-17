@@ -33,6 +33,38 @@
                         </span>
                     @endif
                 </div>
+                <div class="row">
+                    <label for="name" class="col-sm-2 col-form-label">Roles</label>
+                    <div class="col-sm-7">
+                        <div class="form-group">
+                            <div class="tab-contect">
+                                <div class="tab-pane active">
+                                    <table class="table">
+                                        <tbody>
+                                            @foreach ($roles as $id => $role )
+                                            <tr>
+                                                <td>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">
+                                                            <input type="checkbox" class="form-check-input" name="roles[]" value="{{ $id }}">
+                                                            <span class="form-check-sign">
+                                                                <span class="check"></span>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                   {{ $role }}
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
         <div class="card-footer">
             <button type="submit" class="btn btn-fill btn-primary">{{ _('Guardar') }}</button>

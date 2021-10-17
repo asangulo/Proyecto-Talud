@@ -1,93 +1,83 @@
-<div class="sidebar">
-    <div class="sidebar-wrapper">
-        <div class="logo">
-            {{-- <img src="{{asset('img/logo_l.png') }}" alt="" srcset="" class="simple-text logo-mini"> --}}
-            <a href="{{ asset('img/logo_l.png') }}" class="simple-text logo-mini">{{ _('') }}</a>
-            <a href="#" class="simple-text logo-normal">{{ _('White Dashboard') }}</a>
+<div class="sidebar" data-color="orange">
+  <!--
+    Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+-->
+  <div class="logo">
+    <a href="http://www.creative-tim.com" class="simple-text logo-mini">
+      {{ __('CT') }}
+    </a>
+    <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+      {{ __('Creative Tim') }}
+    </a>
+  </div>
+  <div class="sidebar-wrapper" id="sidebar-wrapper">
+    <ul class="nav">
+      <li class="@if ($activePage == 'home') active @endif">
+        <a href="{{ route('home') }}">
+          <i class="now-ui-icons design_app"></i>
+          <p>{{ __('Dashboard') }}</p>
+        </a>
+      </li>
+      <li>
+        <a data-toggle="collapse" href="#laravelExamples">
+            <i class="fab fa-laravel"></i>
+          <p>
+            {{ __("Laravel Examples") }}
+            <b class="caret"></b>
+          </p>
+        </a>
+        <div class="collapse show" id="laravelExamples">
+          <ul class="nav">
+            <li class="@if ($activePage == 'profile') active @endif">
+              <a href="#">
+                <i class="now-ui-icons users_single-02"></i>
+                <p> {{ __("User Profile") }} </p>
+              </a>
+            </li>
+            <li class="@if ($activePage == 'users') active @endif">
+              <a href="#">
+                <i class="now-ui-icons design_bullet-list-67"></i>
+                <p> {{ __("User Management") }} </p>
+              </a>
+            </li>
+          </ul>
         </div>
-        <ul class="nav">
-            <li @if ($pageSlug == 'dashboard') class="active " @endif>
-                <a href="{{ route('home') }}">
-                    <i class="tim-icons icon-chart-pie-36"></i>
-                    <p>{{ _('Dashboard') }}</p>
-                </a>
-            </li>
-            <li @if ($pageSlug == 'usuarios') class="active " @endif>
-                <a href="/usuarios/index">
-                    <i class="tim-icons icon-atom"></i>
-                    <p>{{ _('Usuarios') }}</p>
-                </a>
-            </li>
-            <li>
-                <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">
-                    <i class="fab fa-laravel" ></i>
-                    <span class="nav-link-text" >{{ __('Inventario') }}</span>
-                    <b class="caret mt-1"></b>
-                </a>
-
-                <div class="collapse show" id="laravel-examples">
-                    <ul class="nav pl-4">
-                        <li @if ($pageSlug == 'Marcas') class="active " @endif>
-                            <a href="/marcas/index">
-                                <i class="tim-icons icon-single-02"></i>
-                                <p>{{ _('Marcas') }}</p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug == 'users') class="active " @endif>
-                            <a href="#">
-                                <i class="tim-icons icon-bullet-list-67"></i>
-                                <p>{{ _('User Management') }}</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
-            <li @if ($pageSlug == 'tipoMateriales') class="active " @endif>
-                <a href="/tipoMateriales/index">
-                    <i class="tim-icons icon-atom"></i>
-                    <p>{{ _('Tipo Materiales') }}</p>
-                </a>
-            </li>
-            <li @if ($pageSlug == 'proveedores') class="active " @endif>
-                <a href="/proveedores/index">
-                    <i class="tim-icons icon-pin"></i>
-                    <p>{{ _('Proveedores') }}</p>
-                </a>
-            </li>
-            <li @if ($pageSlug == 'notifications') class="active " @endif>
-                <a href="#">
-                    <i class="tim-icons icon-bell-55"></i>
-                    <p>{{ _('Notifications') }}</p>
-                </a>
-            </li>
-            <li @if ($pageSlug == 'tables') class="active " @endif>
-                <a href="#">
-                    <i class="tim-icons icon-puzzle-10"></i>
-                    <p>{{ _('Table List') }}</p>
-                </a>
-            </li>
-            <li @if ($pageSlug == 'typography') class="active " @endif>
-                <a href="#">
-                    <i class="tim-icons icon-align-center"></i>
-                    <p>{{ _('Typography') }}</p>
-                </a>
-            </li>
-            <li @if ($pageSlug == 'rtl') class="active " @endif>
-                <a href="#">
-                    <i class="tim-icons icon-world"></i>
-                    <p>{{ _('RTL Support') }}</p>
-                </a>
-            </li>
-            <li class=" {{ $pageSlug == 'usuarios' ? 'active' : 'Usuarios' }} bg-info">
-                <a href="">
-                    <i class="tim-icons icon-spaceship"></i>
-                    <p>{{ _('') }}</p>
-                </a>
-            </li>
-        </ul>
-    </div>
+      <li class="@if ($activePage == 'icons') active @endif">
+        <a href="#">
+          <i class="now-ui-icons education_atom"></i>
+          <p>{{ __('Icons') }}</p>
+        </a>
+      </li>
+      <li class = "@if ($activePage == 'maps') active @endif">
+        <a href="#">
+          <i class="now-ui-icons location_map-big"></i>
+          <p>{{ __('Maps') }}</p>
+        </a>
+      </li>
+      <li class = " @if ($activePage == 'notifications') active @endif">
+        <a href="#">
+          <i class="now-ui-icons ui-1_bell-53"></i>
+          <p>{{ __('Notifications') }}</p>
+        </a>
+      </li>
+      <li class = " @if ($activePage == 'table') active @endif">
+        <a href="#">
+          <i class="now-ui-icons design_bullet-list-67"></i>
+          <p>{{ __('Table List') }}</p>
+        </a>
+      </li>
+      <li class = "@if ($activePage == 'typography') active @endif">
+        <a href="#">
+          <i class="now-ui-icons text_caps-small"></i>
+          <p>{{ __('Typography') }}</p>
+        </a>
+      </li>
+      <li class = "">
+        <a href="#" class="bg-info">
+          <i class="now-ui-icons arrows-1_cloud-download-93"></i>
+          <p>{{ __('Upgrade to PRO') }}</p>
+        </a>
+      </li>
+    </ul>
+  </div>
 </div>
-
-
-

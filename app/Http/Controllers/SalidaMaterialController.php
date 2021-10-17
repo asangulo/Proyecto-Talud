@@ -11,56 +11,46 @@ class SalidaMaterialController extends Controller
 {
     public function index(){
 
-        $SalidaMateriales = SalidaMaterial::paginate(5);
-        return view('SalidaMateriales.index', compact('SalidaMateriales'));
+        $salidaMateriales = SalidaMaterial::paginate(5);
+        return view('salidaMateriales.index', compact('salidaMateriales'));
 
     }
 
-    public function create($id = null){
-        $salida = new SalidaMaterial();
+    public function create(){
 
-        // $tipoMaterial = TipoMaterial::orderBy('nombre')->get();
-        $salida = Salida::orderBy('nombre')->get();
+        $salidas = Salida::orderBy('fecha')->get();
         $materiales = Material::orderBy('nombre')->get();
 
-
-        if ($id != null) {
-            $material = SalidaMaterial::findOrFail($id);
-         }
-
-        return view('materiales.create',['salida' => $salida, 'materiales' => $materiales]);
+        return view('salidaMateriales.create',compact('salidas', 'materiales'));
 
     }
+
     public function store(Request $request){
 
-        // $request->validate([
-        //     'nombre' => 'required|min:3|max:20|unique:materiales',
-        //     'peso' => 'required',
-        //     'tamaño' => 'required',
-        //     'cantidad' => 'required|numeric',
-        //     'tipo_id' => 'required',
-        //     'marca_id' => 'required',
-        //     'proveedor_id' => 'required',
-        //     'estado' => 'required',
+        $request->validate([
+            'estado' => 'required',
+            'cantidad' => 'required|numeric',
+            'salida_id' => 'required',
+            'material_id' => 'required',
 
 
-        // ]);
+
+        ]);
 
         SalidaMaterial::create($request->all());
 
-
-         return redirect()->route('salidaMateriales.index')->with('success', 'Marca creada correctamente');
+         return redirect()->route('salidaMateriales.index')->with('success', 'SALIDA MATERIAL creada correctamente');
         //return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA
 
     }
 
-    public function show(SalidaMaterial $material){
+    public function show(SalidaMaterial $salidamaterial){
         //$usuario = User::findOrFail($id);
         return view('salidaMateriales.show', compact('salidaMaterial'));
 
     }
 
-    public function edit(SalidaMaterial $marca){
+    public function edit(SalidaMaterial $salidaMaterial){
 
         return view('salidaMateriales.edit', compact('salidaMaterial'));
 
@@ -68,16 +58,16 @@ class SalidaMaterialController extends Controller
 
     public function update(Request $request, SalidaMaterial $salidaMaterial){
 
-        $salidaMaterial=SalidaMaterial::findOrFail($salidaMaterial);
+        $data = $request->only('material_id', 'salida_id');
 
-        $salidaMaterial->update();
-        return redirect()->route('salidaMateriales.index')->with('success', 'Usuario actualizado correctamente');
+        $salidaMaterial->update($data);
+        return redirect()->route('salidaMateriales.index')->with('success', 'SALIDA MATERIAL actualizado correctamente');
     }
 
     public function destroy(SalidaMaterial $salidaMaterial){
 
         $salidaMaterial->delete();
-        return back()->with('success', 'marca eliminado correctamente');
+        return back()->with('success', 'SALIDA MATERIAL eliminado correctamente');
 
     }
 }

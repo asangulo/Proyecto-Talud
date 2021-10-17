@@ -4,7 +4,7 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h5 class="title">{{ _('Crear TipoMaterial') }}</h5>
+        <h5 class="title">{{ _('Crear marca') }}</h5>
     </div>
     <form method="post" action="{{ route('marcas.store') }}" autocomplete="off">
         <div class="card-body">
@@ -71,7 +71,7 @@
 
                                           {{-- <a href="{{ route('marcas.show', $usuario->id) }}" class="btn btn-info btn-sm"><i >Detalle</i></a> --}}
                                           <a href="{{ route('marcas.edit', $marca->id) }}" class="btn btn-warning btn-sm"><i >Editar</i></a>
-                                          <form action="{{ route('marcas.delete', $marca->id) }}" method="post" style="display: inline-block; " onsubmit="return confirm('seguro ?')">
+                                          <form action="{{ route('marcas.destroy', $marca->id) }}" method="post" style="display: inline-block; " onsubmit="return confirm('seguro ?')">
                                               @csrf
                                               @method('DELETE')
                                               <button class="btn btn-danger btn-sm" type="submit">

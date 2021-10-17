@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="title">Editar Tipo MATERIAL</h5>
+                        <h5 class="title">Editar Marca</h5>
                     </div>
 
                     <form action="{{ route('marcas.update', $marca->id) }}" method="post"   class="form-horizontal">

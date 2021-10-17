@@ -26,8 +26,12 @@
 
              </p>
             <div class="card-description">
-                {{ _('Do not be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...') }}
-            </div>
+                @forelse ($usuario->roles as $role)
+                <span class="badge badge-info">{{ $role->name }}</span>
+                @empty
+                <span class="badge badge-danger">No roles </span>
+                @endforelse
+                </div>
 
         </div>
         <div class="card-footer">

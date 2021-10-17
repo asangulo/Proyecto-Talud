@@ -18,7 +18,6 @@ class CreateClientesTable extends Migration
             $table->string('nombre', 50);
             $table->string('correo')->unique();
             $table->string('clave');
-            $table->rememberToken();
             $table->timestamps();
         });
     }

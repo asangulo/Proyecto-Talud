@@ -29,20 +29,20 @@ class ObraController extends Controller
     }
     public function store(Request $request){
 
-        // $request->validate([
-        //     'nombre' => 'required|min:3|max:20|unique:obras',
-        //     'fechaInicio' => 'required',
-        //     'fechaEntrega' => 'required',
-        //     'estado' => 'required',
-        //     'descripcion' => 'required',
-        //     'cantidad' => 'required|numeric',
-        //     'cliente_id' => 'required',
-        //     'categoria_id' => 'required',
-        //     'usuario_id' => 'required',
+        $request->validate([
+            'nombre' => 'required|min:3|max:20|unique:obras',
+            'fechaInicio' => 'required',
+            'fechaEntrega' => 'required',
+            'estado' => 'required',
+            'descripcion' => 'required',
+            'cantidad' => 'required|numeric',
+            'cliente_id' => 'required',
+            'categoria_id' => 'required',
+            'usuario_id' => 'required',
 
 
 
-        // ]);
+        ]);
 
         Obra::create($request->all());
 
@@ -62,7 +62,7 @@ class ObraController extends Controller
 
         $clientes = Cliente::orderBy('nombre')->get();
         $categorias = Categoria::orderBy('nombre')->get();
-        $usuarios = User::orderBy('nombre')->get();
+        $usuarios = User::orderBy('name')->get();
 
         return view('obras.edit', compact('obra','clientes', 'categorias', 'usuarios'));
 

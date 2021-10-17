@@ -8,12 +8,15 @@
         <div class="row align-items-center py-4">
             <div class="col-md-12">
                 <div class="card">
+
                     <div class="card-header card-header-primary">
-                        <div class="col-4 text-right">
-                            <a href="{{ route('usuario.create') }}" class="btn btn-sm btn-primary">Nuevo Uusuario</a>
-                          </div>
+                        <div class="text-right">
+                            <a href="{{ route('usuario.create') }}" class="btn btn-sm btn-primary">Nuevo Usuario</a>
+                        </div>
                         <h4 class="card-title">Usuarios </h4>
-                        <p class="card-category"> here</p>
+                        {{-- <div>
+                            <input type="search" class="form-control" placeholder="Ingresar el nombre o correo correo de un usuario">
+                        </div> --}}
                     </div>
 
                     <div class="card-body">
@@ -24,7 +27,7 @@
                                     <th>ID</th>
                                     <th>Nombre</th>
                                     <th>Correo</th>
-                                    <th>Created_at</th>
+                                    <th>Roles</th>
                                     <th class="text-right">Acciones</th>
                                 </tr>
                                 </thead>
@@ -37,18 +40,31 @@
                                       <td>{{ $usuario->id }}</td>
                                       <td>{{ $usuario->name }}</td>
                                       <td>{{ $usuario->email }}</td>
-                                      <td>{{ $usuario->created_at }}</td>
+                                      <td>
+
+                                        @forelse ($usuario->roles as $role )
+                                        <span class="badge badge-info">{{ $role->name }}</span>
+
+                                        @empty
+                                        <span class="badge badge-danger">No roles </span>
+
+                                        @endforelse
+
+                                      </td>
                                       <td class="text-right" >
 
                                           <a href="{{ route('usuarios.show', $usuario->id) }}" class="btn btn-info btn-sm"><i >Detalle</i></a>
                                           <a href="{{ route('usuarios.edit', $usuario->id) }}" class="btn btn-warning btn-sm"><i >Editar</i></a>
                                           <form action="{{ route('usuarios.delete', $usuario->id) }}" method="post" style="display: inline-block; " onsubmit="return confirm('seguro ?')">
-                                              @csrf
-                                              @method('DELETE')
-                                              <button class="btn btn-danger btn-sm" type="submit">
-                                                  <i >Eliminar</i>
-                                              </button>
-                                          </form>
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger btn-sm" type="submit">
+                                                <i >Eliminar</i>
+                                            </button>
+                                        </form>
+
+
+
                                       </td>
                                    </tr>
                                    @endforeach

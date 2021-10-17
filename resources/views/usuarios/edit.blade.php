@@ -56,8 +56,38 @@
                                     </span>
                                 @endif
                             </div>
-
-
+                            <div class="row">
+                                <label for="name" class="col-sm-2 col-form-label">Roles</label>
+                                <div class="col-sm-7">
+                                    <div class="form-group">
+                                        <div class="tab-contect">
+                                            <div class="tab-pane active">
+                                                <table class="table">
+                                                    <tbody>
+                                                        @foreach ($roles as $id => $role )
+                                                        <tr>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <label class="form-check-label">
+                                                                        <input type="checkbox" class="form-check-input" name="roles[]" value="{{ $id }}" {{ $usuario->roles->contains($id) ? 'checked' : '' }}>
+                                                                        <span class="form-check-sign">
+                                                                            <span class="check"></span>
+                                                                        </span>
+                                                                    </label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                {{ $role }}
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="text-center">
                                 <button type="submit" class="btn btn-success mt-4">{{ __('Actualizar') }}</button>
                             </div>
@@ -68,43 +98,5 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card card-user">
-                <div class="card-body">
-                    <p class="card-text">
-                        <div class="author">
-                            <div class="block block-one"></div>
-                            <div class="block block-two"></div>
-                            <div class="block block-three"></div>
-                            <div class="block block-four"></div>
-                            <a href="#">
-                                <img class="avatar" src="{{ asset('/img/emilyz.jpg') }}" alt="">
-                                <h3 class="title">{{ $usuario->name }}</h3>
-                            </a>
-                            <p class="description">
-                                {{ _('Ceo/Co-Founder') }}
-                            </p>
-                        </div>
-                    </p>
-                    <p class="descripcion">
-                        Correo: {{ $usuario->email }}   <br>
-                        Fecha de creación: {{ $usuario->created_at }}  <br>
-
-                     </p>
-                    <div class="card-description">
-                        {{ _('Do not be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...') }}
-                    </div>
-
-                </div>
-                <div class="card-footer">
-                    <div class="button-container">
-                        <a href="{{ route('usuarios.index') }}" class="btn btn-sm btn-success mr-3" >Volver</a>
-                        {{-- <a href="{{ route('usuarios.edit') }}" class="btn btn-sm btn-success mr-3" >Editar</a> --}}
-                              <button class="btn btn-sm btn-primary">Editar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 @endsection

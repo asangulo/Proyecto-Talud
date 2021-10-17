@@ -4,10 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Sanctum\HasApiTokens;
 
 class Salida extends Model
 {
-    use HasFactory;
+
+    use HasApiTokens, HasFactory;
+    protected $fillable = [
+        'fecha',
+        'obra_id',
+
+
+    ];
+    protected $hidden = [
+
+        'remember_token',
+    ];
 
     protected $table='salidas';
 

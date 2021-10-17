@@ -25,9 +25,7 @@ class MaterialController extends Controller
         $marcas = Marca::orderBy('nombre')->get();
         $proveedores = Proveedor::orderBy('nombre')->get();
 
-
-        return view('materiales.create',['material' => $material, 'tipos' => $tipos, 'marcas' => $marcas, 'proveedores' => $proveedores]);
-
+        return view('materiales.create', compact('tipos', 'marcas', 'proveedores'));
     }
     public function store(Request $request){
 

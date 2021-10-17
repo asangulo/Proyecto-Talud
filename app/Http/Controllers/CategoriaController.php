@@ -48,15 +48,14 @@ class CategoriaController extends Controller
 
     public function update(Request $request, Categoria $categoria){
 
-        $categoria=Categoria::findOrFail($categoria);
-
-        $categoria->update();
-        return redirect()->route('categorias.index')->with('success', 'Usuario actualizado correctamente');
+        $categoria->update($request->only('nombre'));
+        return redirect()->route('categorias.index')->with('success', 'Categoria  actualizado correctamente');
     }
 
     public function destroy(Categoria $categoria){
 
         $categoria->delete();
+
         return back()->with('success', 'categoria eliminado correctamente');
 
     }

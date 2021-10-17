@@ -12,12 +12,12 @@ class Obra extends Model
 
     protected $fillable = [
         'nombre',
-        'fechainicio',
+        'fechaInicio',
         'fechaEntrega',
         'estado',
         'cantidad',
         'descripcion',
-        'cleinte_id',
+        'cliente_id',
         'categoria_id',
         'usuario_id',
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Obra;
 use App\Models\Salida;
 use Illuminate\Http\Request;
 
@@ -16,13 +17,15 @@ class SalidaController extends Controller
 
     public function create(){
 
-        return view('salidas.create');
+        $obras = Obra::orderBy('nombre')->get();
+        return view('salidas.create', compact('obras'));
 
     }
     public function store(Request $request){
 
         $request->validate([
-            'nombre' => 'required|min:3|max:20',
+            'fecha' => 'required|date',
+            'obra_id' => 'required',
 
         ]);
 
@@ -42,16 +45,17 @@ class SalidaController extends Controller
 
     public function edit(Salida $salida){
 
-        return view('salidas.edit', compact('salida'));
+        $obras = Obra::orderBy('nombre')->get();
+        return view('salidas.edit', compact('salida', 'obras'));
 
     }
 
     public function update(Request $request, Salida $salida){
 
-        $salida=Salida::findOrFail($salida);
+        $data = $request->only('fecha', 'obra_id');
 
-        $salida->update();
-        return redirect()->route('salidas.index')->with('success', 'Usuario actualizado correctamente');
+        $salida->update($data);
+        return redirect()->route('salidas.index')->with('success', 'Salida actualizada correctamente');
     }
 
     public function destroy(Salida $salida){

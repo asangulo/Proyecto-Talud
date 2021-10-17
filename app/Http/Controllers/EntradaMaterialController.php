@@ -27,22 +27,13 @@ class EntradaMaterialController extends Controller
 
     public function store(Request $request){
 
-        // $request->validate([
-        //     'nombre' => 'required|min:3|max:20|unique:materiales',
-        //     'peso' => 'required',
-        //     'tamaño' => 'required',
-        //     'cantidad' => 'required|numeric',
-        //     'tipo_id' => 'required',
-        //     'marca_id' => 'required',
-        //     'proveedor_id' => 'required',
-        //     'estado' => 'required',
-
-
-        // ]);
+        $request->validate([
+            'material_id' => 'required',
+            'entrada_id' => 'required',
+            'cantidad' => 'required|numeric',
+        ]);
 
         EntradaMaterial::create($request->all());
-
-
 
          return redirect()->route('entradaMateriales.index')->with('success', 'entrada materiales creada correctamente');
         //return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA

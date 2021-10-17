@@ -1,4 +1,5 @@
-@extends('layouts.main', ['title' => __('Entrada')])
+@extends('layouts.main', ['page' => __('entradas'), 'pageSlug' => 'entradas'])
+
 
 @section('content')
 
@@ -7,7 +8,7 @@
     <div class="card bg-secondary shadow">
         <div class="card-header bg-orange border-1">
             <div class="row align-items-center">
-                <h3 class="mb-0">{{ __('Entrada') }}</h3>
+                <h3 class="mb-0">{{ __('Entradas') }}</h3>
             </div>
         </div>
         <div class="card-body">
@@ -66,6 +67,5 @@
         </div>
     </div>
 </div>
-
 
 @endsection
