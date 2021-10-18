@@ -11,7 +11,7 @@
   </div>
   <div class="content">
     <div class="row">
-      <div class="col-lg-4">
+      {{-- <div class="col-lg-4">
         <div class="card card-chart">
           <div class="card-header">
             <h5 class="card-category">Global Sales</h5>
@@ -86,9 +86,9 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> --}}
     </div>
-    <div class="row">
+    {{-- <div class="row">
       <div class="col-md-6">
         <div class="card  card-tasks">
           <div class="card-header ">
@@ -269,16 +269,16 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
   </div>
 @endsection
 
 @push('js')
-  <script>
+  {{-- <script>
     $(document).ready(function() {
       // Javascript method's body can be found in assets/js/demos.js
       demo.initDashboardPageCharts();
 
     });
-  </script>
+  </script> --}}
 @endpush

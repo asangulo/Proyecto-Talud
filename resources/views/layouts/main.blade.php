@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <!-- Extra details for Live View on GitHub Pages -->
   <title>
-    jumm
+    Talud
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -46,6 +46,7 @@
   <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="{{ asset('/demo/demo.js') }}"></script>
   @stack('js')
+  @yield('js')
 </body>
 
 </html>
