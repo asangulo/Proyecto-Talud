@@ -1,10 +1,17 @@
-@extends('layouts.main', ['page' => __('roles'), 'pageSlug' => 'roles'])
-
+@extends('layouts.main', [
+    'namePage' => 'roles',
+    'class' => 'sidebar-mini',
+    'activePage' => 'roles',
+  ])
 
 @section('content')
     <div class="row">
         <div class="col-md-8">
-            <div class="card">
+            @if (session('info'))
+        <div class="alert alert-success">
+            {{session('info')}}
+        </div>
+        @endif
                 <div class="card">
                     <div class="card-header">
                         <h5 class="title">Editar roles</h5>
@@ -13,16 +20,6 @@
                     <form action="{{ route('roles.update', $role->id) }}" method="post"   class="form-horizontal">
                         @csrf
                         @method('PUT')
-                        @include('alerts.success')
-
-                        @if (session('status'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{ session('status') }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        @endif
 
 
                         <div class="pl-lg-4">
@@ -30,11 +27,7 @@
                                 <label class="form-control-label" for="input-name">{{ __('name') }}</label>
                                 <input type="text" name="name" id="input-name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" value="{{  old('name', $role->name )}}" autofocus>
 
-                                @if ($errors->has('name'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
+
                             </div>
 
                             <div class="row">
@@ -58,7 +51,7 @@
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                {{ $permission }}
+                                                                {{ $permission->description }}
                                                             </td>
                                                         </tr>
                                                         @endforeach
@@ -78,7 +71,7 @@
                     </form>
                     <hr class="my-4" />
                 </div>
-            </div>
+
         </div>
 
     </div>

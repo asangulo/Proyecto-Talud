@@ -13,9 +13,11 @@
         <div class="card">
           <div class="card-header">
             <div class="text-right">
-              <a href="{{ route('tipoMateriales.create') }}" class="btn btn-sm btn-primary">Añadir Tipo Material</a>
-            </div>
-            <h4 class="card-title"> Simple Table</h4>
+                @can('tipoMateriales.create')
+                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalCreate">Añadir Tipo Material</a>
+                @endcan
+              </div>
+            <h4 class="card-title"> Tipo Materiales</h4>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -31,18 +33,22 @@
                   <tr>
                     <td>{{ $tipoMaterial->id }}</td>
                     <td>{{ $tipoMaterial->nombre }}</td>
-                    <td>{{ $tipoMaterial->created_at }}</td>
-                    <td class="text-right" >
 
-                      <a href="{{ route('tipoMateriales.edit', $tipoMaterial->id) }}" class="btn btn-warning btn-sm"><i >Editar</i></a>
-                      <form action="{{ route('tipoMateriales.delete', $tipoMaterial->id) }}" method="post" style="display: inline-block; " onsubmit="return confirm('seguro ?')">
-                          @csrf
-                          @method('DELETE')
-                          <button class="btn btn-danger btn-sm" type="submit">
-                              <i >Eliminar</i>
-                          </button>
-                      </form>
+                    <td class="text-right" >
+                        @can('tipoMateriales.edit')
+                        <a href="#"  class="btn btn-gray btn-sm btn-icon" data-toggle="modal" data-target="#ModalEdit{{ $tipoMaterial->id}}" > <i class="now-ui-icons ui-2_settings-90"></i></a>
+                        @endcan
+                        @can('tipoMateriales.destroy')
+                        <form action="{{ route('tipoMateriales.destroy', $tipoMaterial->id) }}" method="post" style="display: inline-block; " onsubmit="return confirm('seguro ?')">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger btn-sm" type="submit">
+                              <i class="now-ui-icons ui-1_simple-remove"></i>
+                            </button>
+                        </form>
+                        @endcan
                       </td>
+                      @include('tipoMateriales.modal.edit')
                     </tr>
                     @empty
                     No hay  registrados
@@ -58,4 +64,5 @@
       </div>
     </div>
   </div>
+  @include('tipoMateriales.modal.create')
 @endsection

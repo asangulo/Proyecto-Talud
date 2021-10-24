@@ -1,5 +1,8 @@
-@extends('layouts.main', ['page' => __('CrearUsuario'), 'pageSlug' => 'CrearUsuario'])
-
+@extends('layouts.main', [
+    'namePage' => 'usuarios',
+    'class' => 'sidebar-mini',
+    'activePage' => 'usuarios',
+  ])
 @section('content')
 <div class="card">
     <div class="card-header">

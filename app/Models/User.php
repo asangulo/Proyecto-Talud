@@ -52,4 +52,11 @@ class User extends Authenticatable
     function obra(){
         return $this->hasMany(Obra::class);
     }
+
+    public static function obtenerDato($id){
+        $dato=User::select('name')
+        ->where('id','=',$id )
+        ->first();
+        return $dato->name;
+    }
 }

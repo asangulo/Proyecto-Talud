@@ -24,4 +24,11 @@ class Marca extends Model
     function material(){
         return $this->hasMany(Material::class);
     }
+
+    public static function obtenerMarca($id){
+        $dato=Marca::select('nombre')
+        ->where('id','=',$id)
+        ->first();
+        return $dato->nombre;
+    }
 }

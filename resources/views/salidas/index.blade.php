@@ -13,8 +13,10 @@
         <div class="card">
           <div class="card-header">
             <div class="text-right">
-              <a href="{{ route('salidas.create') }}" class="btn btn-sm btn-primary">Añadir salida</a>
-            </div>
+                @can('salidas.create')
+                <a href="#" class="btn btn-sm btn-primary" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalCreate">Añadir salida</a>
+                @endcan
+              </div>
             <h4 class="card-title"> Salida </h4>
           </div>
           <div class="card-body">
@@ -34,16 +36,20 @@
                     <td>{{ $salida->fecha}}</td>
                     <td>{{ $salida->obra_id }}</td>
                     <td class="text-right" >
-
-                      <a href="{{ route('salidas.edit', $salida->id) }}" class="btn btn-warning btn-sm"><i >Editar</i></a>
-                      <form action="{{ route('salidas.delete', $salida->id) }}" method="post" style="display: inline-block; " onsubmit="return confirm('seguro ?')">
-                          @csrf
-                          @method('DELETE')
-                          <button class="btn btn-danger btn-sm" type="submit">
-                                <i >Eliminar</i>
-                          </button>
-                      </form>
+                        @can('salidas.edit')
+                        <a href="#" class="btn btn-gray btn-sm btn-icon" data-toggle="modal" data-target="#ModalEdit{{ $salida->id}}" > <i class="now-ui-icons ui-2_settings-90"></i></a>
+                        @endcan
+                        @can('salidas.destroy')
+                        <form action="{{ route('salidas.destroy', $salida->id) }}" method="post" style="display: inline-block; " onsubmit="return confirm('seguro ?')">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger btn-sm" type="submit">
+                                  <i >Eliminar</i>
+                            </button>
+                        </form>
+                        @endcan
                       </td>
+                      @include('salidas.modal.edit')
                     </tr>
                     @empty
                     No hay registros
@@ -59,4 +65,5 @@
       </div>
     </div>
   </div>
+  @include('salidas.modal.create')
 @endsection

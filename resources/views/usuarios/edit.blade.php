@@ -1,5 +1,8 @@
-@extends('layouts.main', ['page' => __('Editar usuario'), 'pageSlug' => 'usuarios'])
-
+@extends('layouts.main', [
+    'namePage' => 'usuarios',
+    'class' => 'sidebar-mini',
+    'activePage' => 'usuarios',
+  ])
 
 @section('content')
     <div class="row">

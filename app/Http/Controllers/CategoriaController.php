@@ -22,7 +22,7 @@ class CategoriaController extends Controller
     public function store(Request $request){
 
         $request->validate([
-            'nombre' => 'required|min:3|max:20',
+            'nombre' => 'required|min:3|max:20|unique:categorias',
 
         ]);
 
@@ -56,7 +56,7 @@ class CategoriaController extends Controller
 
         $categoria->delete();
 
-        return back()->with('success', 'categoria eliminado correctamente');
+        return back()->with('success', 'Categoria eliminado correctamente');
 
     }
 }

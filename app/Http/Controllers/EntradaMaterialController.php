@@ -11,8 +11,11 @@ class EntradaMaterialController extends Controller
 {
     public function index(){
 
+        $entradas = Entrada::orderBy('fecha')->get();
+        $materiales = Material::orderBy('nombre')->get();
+
         $entradaMateriales = EntradaMaterial::paginate(5);
-        return view('entradaMateriales.index', compact('entradaMateriales'));
+        return view('entradaMateriales.index', compact('entradaMateriales', 'entradas', 'materiales'));
 
     }
 
@@ -28,9 +31,10 @@ class EntradaMaterialController extends Controller
     public function store(Request $request){
 
         $request->validate([
+            'estado' => 'required',
+            'cantidad' => 'required|numeric',
             'material_id' => 'required',
             'entrada_id' => 'required',
-            'cantidad' => 'required|numeric',
         ]);
 
         EntradaMaterial::create($request->all());
@@ -58,16 +62,16 @@ class EntradaMaterialController extends Controller
 
     public function update(Request $request, EntradaMaterial $entradaMaterial){
 
-        $data = $request->only('material_id', 'entrada_id');
+        $data = $request->only('material_id', 'entrada_id', 'cantidad', 'estado');
 
         $entradaMaterial->update($data);
-        return redirect()->route('entradaMateriales.index')->with('success', 'Usuario actualizado correctamente');
+        return redirect()->route('entradaMateriales.index')->with('success', 'Entrada Material actualizado correctamente');
     }
 
     public function destroy(EntradaMaterial $entradaMaterial){
 
         $entradaMaterial->delete();
-        return back()->with('success', 'marca eliminado correctamente');
+        return back()->with('success', 'Entrada Material eliminado correctamente');
 
     }
 }

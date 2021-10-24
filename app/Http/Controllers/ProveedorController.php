@@ -9,7 +9,7 @@ class ProveedorController extends Controller
 {
     public function index(){
 
-        $proveedores = Proveedor::paginate(5);
+        $proveedores = Proveedor::paginate(10);
         return view('proveedores.index', compact('proveedores'));
 
     }
@@ -23,9 +23,11 @@ class ProveedorController extends Controller
     public function store(Request $request){
 
         $request->validate([
-            'nombre' => 'required|min:3|max:10',
+            'nombre' => 'required|min:3|max:20',
+            'apellido' => 'required|min:3|max:20',
             'celular' =>'required|numeric|unique:proveedores',
             'correo' => 'required|email|unique:proveedores',
+            'clave' => 'required|numeric|unique:proveedores',
             'estado' =>'required',
 
         ]);
@@ -33,7 +35,7 @@ class ProveedorController extends Controller
 
         Proveedor::create($request->all());
 
-        return redirect()->route('proveedores.index')->with('success', 'usuario creado correctamente');
+        return redirect()->route('proveedores.index')->with('success', 'proveedor creado correctamente');
         // return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA
 
     }
@@ -52,11 +54,11 @@ class ProveedorController extends Controller
 
     public function update(Request $request, Proveedor $proveedor){
 
-        // $Proveedor=Proveedor::findOrFail($Proveedor);
-        $data = $request->only('nombre', 'celular', 'correo', 'estado');
 
-        $proveedor->update($data);
+        $proveedor->update($request->only('nombre', 'apellido', 'celular', 'correo', 'clave', 'estado'));
+
         return redirect()->route('proveedores.index')->with('success', 'Proveedor actualizado correctamente');
+
     }
 
     public function destroy(Proveedor $proveedor){

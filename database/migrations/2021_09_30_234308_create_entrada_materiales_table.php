@@ -15,9 +15,10 @@ class CreateEntradaMaterialesTable extends Migration
     {
         Schema::create('entrada_materiales', function (Blueprint $table) {
             $table->id();
+            $table->string('estado');
+            $table->integer('cantidad');
             $table->foreignId('material_id');
             $table->foreignId('entrada_id');
-            $table->integer('cantidad');
             $table->timestamps();
 
             $table->foreign('entrada_id')->references('id')->on('entradas');

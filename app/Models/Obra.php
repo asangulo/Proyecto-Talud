@@ -43,4 +43,12 @@ class Obra extends Model
     function salida(){
         return $this->hasMany(Salida::class);
     }
+
+    public static function obtenerObra($id){
+        $dato=Obra::select('id,fechaInicio,fechaEntrega,descripcion')
+        ->where('id','=',$id)
+        ->first();
+        return $dato;
+    }
+
 }

@@ -13,13 +13,15 @@
         <div class="card">
           <div class="card-header">
             <div class="text-right">
-              <a href="{{ route('obras.create') }}" class="btn btn-sm btn-primary">Añadir obra</a>
-            </div>
+                @can('obras.create')
+                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalCreate">Añadir obra</a>
+                @endcan
+              </div>
             <h4 class="card-title"> Obras </h4>
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table">
+              <table class="table" id="obras">
                 <thead class=" text-primary">
                   <tr>
                     <th>ID</th>
@@ -34,43 +36,63 @@
                     <th>Usuario</th>
                   <th class="text-right">Acciones</th>
                 </thead>
-                <tbody>
-                  @forelse ($obras as $obra )
-                  <tr>
-                    <td>{{ $obra->id }}</td>
-                    <td>{{ $obra->nombre }}</td>
-                    <td>{{ $obra->fechaInicio }}</td>
-                    <td>{{ $obra->fechaInicio }}</td>
-                    <td>{{ $obra->estado }}</td>
-                    <td>{{ $obra->descripcion }}</td>
-                    <td>{{ $obra->cantidad }}</td>
-                    <td>{{ $obra->cliente->nombre }}</td>
-                    <td>{{ $obra->categoria->nombre}}</td>
-                    <td>{{ $obra->usuario_id }}</td>
-                    <td class="text-right" >
 
-                        <a href="{{ route('obras.edit', $obra->id) }}" class="btn btn-warning btn-sm"><i >Editar</i></a>
-                        <form action="{{ route('obras.delete', $obra->id) }}" method="post" style="display: inline-block; " onsubmit="return confirm('seguro ?')">
-                            @csrf
-                            method('DELETE')
-                            <button class="btn btn-danger btn-sm" type="submit">
-                                <i >Eliminar</i>
-                            </button>
-                        </form>
-                      </td>
-                    </tr>
-                    @empty
-                    No hay registros
-                    @endforelse
-                </tbody>
               </table>
             </div>
-          </div>
-          <div class="card-footer mr-auto">
-              {{ $obras->links() }}
           </div>
         </div>
       </div>
     </div>
   </div>
+  @include('obras.modal.create')
+@endsection
+
+@section('js')
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+
+
+<script>
+    $('#obras').DataTable({
+                "language": {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
+                "order": [[ 0, "asc" ]],
+                "processing": true,
+                "responsive": true,
+                "serverSide": true,
+                "ajax": "{{ route('ajax.request.obras')}}",
+                "columns":[
+                {"data":"id"},
+                {"data":"nombre"},
+                {"data":"fechaInicio"},
+                {"data":"fechaEntrega"},
+                {"data":"estado"},
+                {"data":"descripcion"},
+                {"data":"cantidad"},
+                {"data":"cliente"},
+                {"data":"categoria"},
+                {"data":"usuario"},
+                { "data": "opciones",orderable:false, searchable:false },
+                ],
+
+    });
+</script>
 @endsection

@@ -13,8 +13,11 @@ class Cliente extends Model
 
     protected $fillable = [
         'nombre',
+        'apellido',
         'correo',
+        'celular',
         'clave',
+        'direcccion',
 
     ];
     protected $hidden = [
@@ -26,5 +29,12 @@ class Cliente extends Model
 
     function obra(){
         return $this->hasMany(Obra::class);
+    }
+
+    public static function obtenerDato($id){
+        $dato=Cliente::select('nombre')
+        ->where('id','=',$id )
+        ->first();
+        return $dato->nombre;
     }
 }

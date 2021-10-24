@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Material;
+use App\Models\EntradaMaterial;
+use App\Models\SalidaMaterial;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +26,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $materiales = Material::paginate(5);
+        $dias_entrada=EntradaMaterial::obtenerDatosTrimestre();
+        $dias_salidas=SalidaMaterial::obtenerDatosTrimestre();
+        return view('home',[
+            'dias_entrada'=>$dias_entrada,
+            'dias_salidas'=>$dias_salidas,
+            'materiales'=>$materiales,
+
+        ]);
     }
 }

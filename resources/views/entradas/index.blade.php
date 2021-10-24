@@ -10,10 +10,17 @@
   <div class="content">
     <div class="row">
       <div class="col-md-12">
+        @if (session('success'))
+        <div class="alert alert-primary">
+            {{session('success')}}
+        </div>
+        @endif
         <div class="card">
           <div class="card-header">
             <div class="text-right">
-              <a href="{{ route('entradas.create') }}" class="btn btn-sm btn-primary">Añadir entradas</a>
+                @can('entradas.create')
+                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalCreate" >Añadir entradas</a>
+                @endcan
             </div>
             <h4 class="card-title"> Entradas </h4>
           </div>
@@ -34,16 +41,24 @@
                     <td>{{ $entrada->fecha }}</td>
                     <td>{{ $entrada->proveedor->nombre }}</td>
                     <td class="text-right" >
+                        @can('entradas.edit')
+                        <a href="#"  class="btn btn-gray btn-sm btn-icon" data-toggle="modal" data-target="#ModalEdit{{ $entrada->id}}" > <i class="now-ui-icons ui-2_settings-90"></i></a>
 
-                        <a href="{{ route('entradas.edit', $entrada->id) }}" class="btn btn-warning btn-sm"><i >Editar</i></a>
-                        <form action="{{ route('entradas.delete', $entrada->id) }}" method="post" style="display: inline-block; " onsubmit="return confirm('seguro ?')">
+
+                        @endcan
+                        @can('entradas.destroy')
+                        <form action="{{ route('entradas.destroy', $entrada->id) }}" method="post" style="display: inline-block; " onsubmit="return confirm('seguro ?')">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-danger btn-sm" type="submit">
                                 <i >Eliminar</i>
                             </button>
                         </form>
+                        @endcan
+
+
                       </td>
+                      @include('entradas.modal.edit')
                     </tr>
                     @empty
                     No hay registros
@@ -59,4 +74,5 @@
       </div>
     </div>
   </div>
+  @include('entradas.modal.create')
 @endsection

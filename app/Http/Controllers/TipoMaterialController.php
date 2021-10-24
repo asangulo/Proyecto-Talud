@@ -22,15 +22,13 @@ class TipoMaterialController extends Controller
     public function store(Request $request){
 
         $request->validate([
-            'nombre' => 'required|min:3|max:20',
-
-
+            'nombre' => 'required|min:3|max:20|unique:tipo_materiales',
         ]);
 
         TipoMaterial::create($request->all());
 
 
-         return redirect()->route('tipoMateriales.index')->with('success', 'Marca creada correctamente');
+         return redirect()->route('tipoMateriales.index')->with('success', 'Tipo Material creado correctamente');
         //return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA
 
     }
@@ -49,16 +47,17 @@ class TipoMaterialController extends Controller
 
     public function update(Request $request, TipoMaterial $tipoMaterial){
 
+        // $marca=Marca::findOrFail($marca);
         $data = $request->only('nombre');
 
         $tipoMaterial->update($data);
-        return redirect()->route('tipoMateriales.index')->with('success', 'Tipo Material actualizado correctamente');
+        return redirect()->route('tipoMateriales.index')->with('success', 'tipo$tipoMaterial actualizada correctamente');
     }
 
     public function destroy(TipoMaterial $tipoMaterial){
 
         $tipoMaterial->delete();
-        return back()->with('success', 'marca eliminado correctamente');
+        return back()->with('success', 'Tipo Material eliminado correctamente');
 
     }
 }

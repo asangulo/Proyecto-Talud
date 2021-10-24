@@ -1,7 +1,7 @@
 @extends('layouts.main', [
     'namePage' => 'clientes',
     'class' => 'sidebar-mini',
-    'activePage' => 'cleintes',
+    'activePage' => 'clientes',
   ])
 
 @section('content')
@@ -13,7 +13,11 @@
         <div class="card">
           <div class="card-header">
             <div class="text-right">
-              <a href="{{ route('clientes.create') }}" class="btn btn-sm btn-primary">Añadir cliente</a>
+                @can('clientes.create')
+                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalCreate" >Añadir cliente</a>
+
+                @endcan
+
             </div>
             <h4 class="card-title"> clientes </h4>
           </div>
@@ -24,8 +28,11 @@
                   <tr>
                     <th>ID</th>
                     <th>Nombre</th>
+                    <th>Apellido</th>
                     <th>Correo</th>
-                    <th>Clave</th>
+                    <th>Celular</th>
+                    <th>Direccion</th>
+
                   <th class="text-right">Acciones</th>
                 </thead>
                 <tbody>
@@ -33,20 +40,30 @@
                   <tr>
                     <td>{{ $cliente->id }}</td>
                     <td>{{ $cliente->nombre }}</td>
+                    <td>{{ $cliente->apellido }}</td>
                     <td>{{ $cliente->correo }}</td>
-                    <td>{{ $cliente->clave }}</td>
-                    <td class="text-right" >
+                    <td>{{ $cliente->celular }}</td>
+                    <td>{{ $cliente->direcccion }}</td>
 
-                        <a href="{{ route('clientes.show', $cliente->id) }}" class="btn btn-info btn-sm"><i class="ni ni-single-02">Detalle</i></a>
-                        <a href="{{ route('clientes.edit', $cliente->id) }}" class="btn btn-warning btn-sm"><i class="ni ni-single-02">Edit</i></a>
-                          <form action="{{ route('clientes.delete', $cliente->id) }}" method="post" style="display: inline-block; " onsubmit="return confirm('seguro ?')">
+                    <td class="text-right" >
+                        @can('clientes.edit')
+                        <a href="#"  class="btn btn-gray btn-sm btn-icon" data-toggle="modal" data-target="#ModalEdit{{ $cliente->id}}" > <i class="now-ui-icons ui-2_settings-90"></i></a>
+
+                        @endcan
+                        @can('clientes.destroy')
+                        <form action="{{ route('clientes.destroy', $cliente->id) }}" method="post" style="display: inline-block; " onsubmit="return confirm('seguro ?')">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-danger btn-sm" type="submit">
-                              <i class="ni ni-fat-remove ">Eliminar</i>
+                                <i class="now-ui-icons ui-1_simple-remove"></i>
                             </button>
                           </form>
+
+                        @endcan
+                        {{-- <a href="{{ route('clientes.show', $cliente->id) }}" class="btn btn-info btn-sm"><i class="ni ni-single-02">Detalle</i></a> --}}
+
                       </td>
+                      @include('clientes.modal.edit')
                     </tr>
                     @empty
                     No hay registros
@@ -62,4 +79,5 @@
       </div>
     </div>
   </div>
+  @include('clientes.modal.create')
 @endsection

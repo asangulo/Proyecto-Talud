@@ -13,8 +13,10 @@ class Proveedor extends Model
 
     protected $fillable = [
         'nombre',
+        'apellido',
         'celular',
         'correo',
+        'clave',
         'estado',
 
     ];
@@ -31,5 +33,12 @@ class Proveedor extends Model
 
     function material(){
         return $this->hasMany(Material::class);
+    }
+
+    public static function obtenerProveedor($id){
+        $dato=Proveedor::select('nombre')
+        ->where('id','=',$id )
+        ->first();
+        return $dato->nombre;
     }
 }

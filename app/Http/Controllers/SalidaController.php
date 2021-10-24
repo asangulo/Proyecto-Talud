@@ -10,8 +10,10 @@ class SalidaController extends Controller
 {
     public function index(){
 
+        $obras = Obra::orderBy('nombre')->get();
+
         $salidas = Salida::paginate(5);
-        return view('salidas.index', compact('salidas'));
+        return view('salidas.index', compact('salidas', 'obras'));
 
     }
 

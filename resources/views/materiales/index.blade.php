@@ -4,6 +4,8 @@
     'activePage' => 'materiales',
   ])
 
+
+
 @section('content')
   <div class="panel-header panel-header-sm">
   </div>
@@ -13,13 +15,16 @@
         <div class="card">
           <div class="card-header">
             <div class="text-right">
-              <a href="{{ route('materiales.create') }}" class="btn btn-sm btn-primary">Añadir materiales</a>
+                @can('materiales.create')
+                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalCreate" >Añadir materiales</a>
+                @endcan
+
             </div>
             <h4 class="card-title"> Materiales </h4>
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table">
+              <table class="table" id="materiales">
                 <thead class=" text-primary">
                   <tr>
                     <th>ID</th>
@@ -35,35 +40,8 @@
                   <th class="text-right">Acciones</th>
                 </thead>
                 <tbody>
-                  @forelse ($materiales as $material )
-                  <tr>
-                    <td>{{ $material->id }}</td>
-                    <td>{{ $material->nombre }}</td>
-                    <td>{{ $material->peso }}</td>
-                    <td>{{ $material->tamaño }}</td>
-                    <td>{{ $material->cantidad }}</td>
-                    <td>{{ $material->tipo_id }}</td>
-                    <td>{{ $material->marca->nombre}}</td>
-                    <td>{{ $material->proveedor->nombre }}</td>
-                    <td>{{ $material->estado }}</td>
-
-                    <td class="text-right" >
-
-                        <a href="{{ route('materiales.show', $material->id) }}" class="btn btn-info btn-sm"><i class="ni ni-single-02">Detalle</i></a>
-                        <a href="{{ route('materiales.edit', $material->id) }}" class="btn btn-warning btn-sm"><i class="ni ni-single-02">Edit</i></a>
-                        <form action="{{ route('materiales.destroy', $material->id) }}" method="post" style="display: inline-block; " onsubmit="return confirm('seguro ?')">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger btn-sm" type="submit">
-                              <i class="ni ni-fat-remove ">Eliminar</i>
-                            </button>
-                        </form>
-                      </td>
-                    </tr>
-                    @empty
-                    No hay registros
-                    @endforelse
                 </tbody>
+
               </table>
             </div>
           </div>
@@ -74,4 +52,57 @@
       </div>
     </div>
   </div>
+  @include('materiales.modal.create')
+@endsection
+
+@section('js')
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+
+
+<script>
+    $('#materiales').DataTable({
+                "language": {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
+                "order": [[ 0, "asc" ]],
+                "processing": true,
+                "responsive": true,
+                "serverSide": true,
+                "ajax": "{{ route('ajax.request.materiales')}}",
+                "columns":[
+                {"data":"id"},
+                {"data":"nombre"},
+                {"data":"peso"},
+                {"data":"tamaño"},
+                {"data":"cantidad"},
+                {"data":"tipo"},
+                {"data":"marca"},
+                {"data":"proveedor"},
+                {"data":"estado"},
+                { "data": "opciones",orderable:false, searchable:false },
+                ],
+
+    });
+</script>
+
+
+
 @endsection

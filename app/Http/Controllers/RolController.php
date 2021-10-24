@@ -29,7 +29,7 @@ class RolController extends Controller
      */
     public function create()
     {
-        $permissions = Permission::all()->pluck('name', 'id');
+        $permissions = Permission::all();
         // dd($permissions);
 
         return view('roles.create', compact('permissions'));
@@ -51,7 +51,7 @@ class RolController extends Controller
 
         // $role->permissions()->sync($request->input('permissions', []));
         $role->syncPermissions($request->input('permissions', []));
-        return redirect()->route('roles.index');
+        return redirect()->route('roles.index')->with('info', 'se registro correctamente');
     }
 
     /**
@@ -74,7 +74,7 @@ class RolController extends Controller
      */
     public function edit(Role $role)
     {
-        $permissions = Permission::all()->pluck('name', 'id');
+        $permissions = Permission::all();
         $role->load('permissions');
         // dd($role);
 
@@ -90,12 +90,12 @@ class RolController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        $role->update($request->only('name'));
+        $role->update($request->all());
 
         // $role->permissions()->syncPermissions($request->input('permissions', []));
-        $role->syncPermissions($request->input('permissions', []));
+        $role->permissions()->sync($request->permissions);
 
-        return redirect()->route('roles.index');
+        return redirect()->route('roles.edit', $role)->with('info', 'Actualizado Correctamente');
     }
 
     /**
@@ -108,6 +108,6 @@ class RolController extends Controller
     {
         $role->delete();
 
-        return redirect()->route('roles.index');
+        return redirect()->route('roles.index')->with('info', 'Eliminado Correctamente');
     }
 }

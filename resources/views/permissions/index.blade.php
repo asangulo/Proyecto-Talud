@@ -13,7 +13,7 @@
         <div class="card">
           <div class="card-header">
             <div class="text-right">
-              <a href="{{ route('permissions.create') }}" class="btn btn-sm btn-primary">Añadir permisos</a>
+              <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalCreate">Añadir permisos</a>
             </div>
             <h4 class="card-title"> Permisos </h4>
           </div>
@@ -37,8 +37,8 @@
                     <td>{{ $permission->created_at }}</td>
                     <td class="text-right" >
 
-                        <a href="{{ route('permissions.show', $permission->id) }}" class="btn btn-info btn-sm"><i >Detalle</i></a>
-                        <a href="{{ route('permissions.edit', $permission->id) }}" class="btn btn-warning btn-sm"><i >Editar</i></a>
+                        <a href="#" class="btn btn-info btn-sm"><i >Detalle</i></a>
+                        <a href="#"  class="btn btn-gray btn-sm btn-icon" data-toggle="modal" data-target="#ModalEdit{{ $permission->id}}" > <i class="now-ui-icons ui-2_settings-90"></i></a>
                          <form action="{{ route('permissions.destroy', $permission->id) }}" method="post" style="display: inline-block; " onsubmit="return confirm('seguro ?')">
                           @csrf
                           @method('DELETE')
@@ -47,6 +47,7 @@
                           </button>
                           </form>
                       </td>
+                      @include('permissions.modal.edit')
                     </tr>
                     @empty
                     No hay registros
@@ -62,4 +63,5 @@
       </div>
     </div>
   </div>
+  @include('permissions.modal.create')
 @endsection

@@ -5,14 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Material;
 use App\Models\SalidaMaterial;
 use App\Models\Salida;
+use App\Models\EntradaMaterial;
 use Illuminate\Http\Request;
 
 class SalidaMaterialController extends Controller
 {
     public function index(){
 
+        $salidas = Salida::orderBy('fecha')->get();
+        $materiales = Material::orderBy('nombre')->get();
+        $entradaMateriales = EntradaMaterial::getData();
         $salidaMateriales = SalidaMaterial::paginate(5);
-        return view('salidaMateriales.index', compact('salidaMateriales'));
+        return view('salidaMateriales.index', compact('salidaMateriales', 'salidas', 'materiales','entradaMateriales' ));
+
 
     }
 
@@ -27,20 +32,23 @@ class SalidaMaterialController extends Controller
 
     public function store(Request $request){
 
+        $cant_permitida=EntradaMaterial::getCant($request->material_id);
         $request->validate([
             'estado' => 'required',
             'cantidad' => 'required|numeric',
             'salida_id' => 'required',
             'material_id' => 'required',
 
-
-
         ]);
-
-        SalidaMaterial::create($request->all());
-
-         return redirect()->route('salidaMateriales.index')->with('success', 'SALIDA MATERIAL creada correctamente');
-        //return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA
+        if(intval($request->cantidad) > $cant_permitida->cantidad){
+            return redirect()->route('salidaMateriales.index')->with('false', 'supero la cantidad permitida');
+        }else{
+            SalidaMaterial::create($request->all());
+            $nuevaCantidad=$cant_permitida->cantidad-intval($request->cantidad);
+            EntradaMaterial::cambiarCantidad($nuevaCantidad,$request->material_id);
+            return redirect()->route('salidaMateriales.index')->with('success', 'SALIDA MATERIAL creada correctamente');
+           //return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA
+        }
 
     }
 

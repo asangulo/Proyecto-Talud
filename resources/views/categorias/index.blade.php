@@ -13,8 +13,11 @@
         <div class="card">
           <div class="card-header">
             <div class="text-right">
-              <a href="{{ route('categorias.create') }}" class="btn btn-sm btn-primary">Añadir categoria</a>
-            </div>
+                @can('categorias.create')
+                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalCreat">Añadir Categoria</a>
+
+                @endcan
+              </div>
             <h4 class="card-title"> Categorias </h4>
           </div>
           <div class="card-body">
@@ -32,16 +35,21 @@
                     <td>{{ $categoria->id }}</td>
                     <td>{{ $categoria->nombre }}</td>
                     <td class="text-right" >
+                        @can('categorias.edit')
+                        <a href="#"  class="btn btn-gray btn-sm btn-icon" data-toggle="modal" data-target="#ModalEdit{{ $categoria->id}}" ><i class="now-ui-icons ui-2_settings-90"></i></a>
 
-                          <a href="{{ route('categorias.edit', $categoria->id) }}" class="btn btn-warning btn-sm"><i >Editar</i></a>
-                          <form action="{{ route('categorias.delete', $categoria->id) }}" method="post" style="display: inline-block; " onsubmit="return confirm('seguro ?')">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-danger btn-sm" type="submit">
-                                    <i >Eliminar</i>
-                                </button>
-                          </form>
+                        @endcan
+                        @can('categorias.destroy')
+                        <form action="{{ route('categorias.destroy', $categoria->id) }}" method="post" style="display: inline-block; " class="formulario-eliminar">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" rel="tooltip" class="btn btn-danger btn-sm btn-icon">
+                                <i class="now-ui-icons ui-1_simple-remove"></i>
+                            </button>
+                      </form>
+                        @endcan
                       </td>
+                      @include('categorias.modal.edit')
                     </tr>
                     @empty
                     No hay registros
@@ -57,4 +65,53 @@
       </div>
     </div>
   </div>
+  @include('categorias.modal.create')
 @endsection
+
+@section('js')
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if (session('success') == ' eliminado correctamente')
+   <script>
+        Swal.fire(
+            '¡Eliminado!',
+            'Se ha eliminado con éxito.',
+            'success'
+            )
+    </script>
+
+@endif
+
+<script>
+
+    $('.formulario-eliminar').submit(function(e){
+        e.preventDefault();
+
+        Swal.fire({
+        title: '¿Estas seguro?',
+        text: "esta marca se eliminara definitivamente!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '¡Sí, eliminar!'
+        cancelButtonText: 'Cancelar'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            // Swal.fire(
+            // 'Deleted!',
+            // 'Your file has been deleted.',
+            // 'success'
+            // )
+
+            this.submit();
+        }
+        })
+    });
+
+
+</script>
+
+@endsection
+

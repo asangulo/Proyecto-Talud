@@ -11,9 +11,9 @@ use Spatie\Permission\Models\Role;
 class UsuarioController extends Controller
 {
     public function index(){
-
-        $usuarios = User::paginate(5);
-        return view('usuarios.index', compact('usuarios'));
+        $roles = Role::all()->pluck('name', 'id');
+        $usuarios = User::all();
+        return view('usuarios.index', compact('usuarios', 'roles'));
 
     }
 
@@ -26,12 +26,12 @@ class UsuarioController extends Controller
 
     public function store( UserCreateRequest $request){
 
-        // $request->validate([
-        //     'name' => 'required|min:3|max:10',
-        //     'email' => 'required|email|unique:users',
-        //     'password' =>'required',
+        $request->validate([
+            'name' => 'required|min:3|max:10',
+            'email' => 'required|email|unique:users',
+            'password' =>'required',
 
-        // ]);
+        ]);
 
         $usuario = User::create($request->only('name','email')
         + [
@@ -40,7 +40,7 @@ class UsuarioController extends Controller
 
         $roles = $request->input('roles', []);
         $usuario->syncRoles($roles);
-        return redirect()->route('usuarios.index', $usuario->id)->with('success', 'usuario creado correctamente');
+        return redirect()->route('usuarios.index', $usuario->id)->with('success', 'Usuario creado correctamente');
         // return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA
 
     }
@@ -80,19 +80,17 @@ class UsuarioController extends Controller
 
         $roles = $request->input('roles', []);
         $usuario->syncRoles($roles);
-        return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado correctamente');
+        return redirect()->route('usuarios.index', compact('roles'))->with('success', 'Usuario actualizado correctamente');
     }
 
     public function destroy(User $usuario){
-
-
 
         if (auth()->user()->id == $usuario->id) {
             return redirect()->route('usuarios.index')->with('success', 'No se puede eliminar a usted mismo ');
         }
 
         $usuario->delete();
-        return back()->with('success', 'Usuario eliminado correctamente');
+        return back()->with('success', 'Eliminado correctamente');
 
     }
 }

@@ -12,8 +12,12 @@ class ObraController extends Controller
 {
     public function index(){
 
-        $obras = Obra::paginate(5);
-        return view('obras.index', compact('obras'));
+        $clientes = Cliente::orderBy('nombre')->get();
+        $categorias = Categoria::orderBy('nombre')->get();
+        $usuarios = User::orderBy('name')->get();
+
+        $obras = Obra::paginate(10);
+        return view('obras.index', compact('obras','clientes', 'categorias', 'usuarios'));
 
     }
 
@@ -31,10 +35,10 @@ class ObraController extends Controller
 
         $request->validate([
             'nombre' => 'required|min:3|max:20|unique:obras',
-            'fechaInicio' => 'required',
-            'fechaEntrega' => 'required',
+            'fechaInicio' => 'required|date',
+            'fechaEntrega' => 'required|date',
             'estado' => 'required',
-            'descripcion' => 'required',
+            'descripcion' => 'required|min:5|max:100|',
             'cantidad' => 'required|numeric',
             'cliente_id' => 'required',
             'categoria_id' => 'required',
@@ -72,13 +76,38 @@ class ObraController extends Controller
         $data = $request->only('nombre', 'fechaInicio', 'fechaEntrega', 'estado', 'descripcion', 'cantidad', 'cliente_id', 'categoria_id', 'usuario_id');
 
         $obra->update($data);
-        return redirect()->route('obras.index')->with('success', 'Usuario actualizado correctamente');
+        return redirect()->route('obras.index')->with('success', 'Obra actualizado correctamente');
     }
 
     public function destroy(Obra $obra){
 
         $obra->delete();
-        return back()->with('success', 'marca eliminado correctamente');
+        return back()->with('success', 'obra eliminado correctamente');
 
+    }
+
+    public static function datatableObras(){
+        $query=Obra::all();
+        return datatables($query)
+        ->addColumn('opciones',function($query){
+            return '  ';
+        })
+        ->addColumn('cliente',function($query){
+            $cliente=Cliente::obtenerDato($query->cliente_id);
+
+            return $cliente;
+        })
+        ->addColumn('categoria',function($query){
+            $categoria=Categoria::obtenerDato($query->categoria_id);
+
+            return $categoria;
+        })
+        ->addColumn('usuario',function($query){
+            $usuario=User::obtenerDato($query->usuario_id);
+
+            return $usuario;
+        })
+        ->rawColumns(['opciones','cliente','categoria','usuario'])
+        ->make(true);
     }
 }

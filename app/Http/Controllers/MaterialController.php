@@ -12,8 +12,12 @@ class MaterialController extends Controller
 {
     public function index(){
 
-        $materiales = Material::paginate(5);
-        return view('materiales.index', compact('materiales'));
+        $tipos = TipoMaterial::orderBy('nombre')->get();
+        $marcas = Marca::orderBy('nombre')->get();
+        $proveedores = Proveedor::orderBy('nombre')->get();
+
+        $materiales = Material::paginate(10);
+        return view('materiales.index', compact('materiales','tipos', 'marcas', 'proveedores'));
 
     }
 
@@ -31,8 +35,8 @@ class MaterialController extends Controller
 
         $request->validate([
             'nombre' => 'required|min:3|max:20|unique:materiales',
-            'peso' => 'required',
-            'tamaño' => 'required',
+            'peso' => 'required|min:3|max:10|',
+            'tamaño' => 'required|min:3|max:10|',
             'cantidad' => 'required|numeric',
             'tipo_id' => 'required',
             'marca_id' => 'required',
@@ -45,7 +49,7 @@ class MaterialController extends Controller
 
         Material::create($request->all());
 
-         return redirect()->route('materiales.index')->with('success', 'material creada correctamente');
+         return redirect()->route('materiales.index')->with('success', 'Material creado correctamente');
         //return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA
 
     }
@@ -74,13 +78,41 @@ class MaterialController extends Controller
         $data = $request->only('nombre', 'peso', 'tamaño', 'cantidad', 'tipo_id', 'marca_id', 'proveedor_id', 'estado');
 
         $material->update($data);
-        return redirect()->route('materiales.index')->with('success', 'Usuario actualizado correctamente');
+        return redirect()->route('materiales.index')->with('success', 'Material actualizado correctamente');
     }
 
     public function destroy(Material $material){
 
         $material->delete();
-        return back()->with('success', ' material eliminado correctamente');
+        return back()->with('success', ' Material eliminado correctamente');
+
+    }
+    public function datatableMateriales(){
+        $query=Material::all();
+        return datatables($query)
+        ->addColumn('opciones',function($query){
+            $html='';
+
+
+            return $html;
+        })
+        ->addColumn('tipo',function($query){
+            $tipo=TipoMaterial::obtenerTipo($query->tipo_id);
+
+            return $tipo;
+        })
+        ->addColumn('marca',function($query){
+            $marca=Marca::obtenerMarca($query->marca_id);
+
+            return $marca;
+        })
+        ->addColumn('proveedor',function($query){
+            $proveedor=Proveedor::obtenerProveedor($query->proveedor_id);
+
+            return $proveedor;
+        })
+        ->rawColumns(['opciones','tipo','marca','proveedor'])
+        ->make(true);
 
     }
 }

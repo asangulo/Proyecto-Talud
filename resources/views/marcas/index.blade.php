@@ -10,10 +10,17 @@
   <div class="content">
     <div class="row">
       <div class="col-md-12">
+        @if (session('success'))
+        <div class="alert alert-primary">
+            {{session('success')}}
+        </div>
+        @endif
         <div class="card">
           <div class="card-header">
             <div class="text-right">
-              <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalCreate" >Añadir marca</a>
+                @can('marcas.create')
+                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalCreate">Añadir marca</a>
+                @endcan
             </div>
             <h4 class="card-title"> Marcas </h4>
           </div>
@@ -32,15 +39,19 @@
                     <td>{{ $marca->id }}</td>
                     <td>{{ $marca->nombre }}</td>
                     <td class="text-right" >
+                        @can('marcas.edit')
+                        <a href="#"  class="btn btn-gray btn-sm btn-icon" data-toggle="modal" data-target="#ModalEdit{{ $marca->id}}" > <i class="now-ui-icons ui-2_settings-90"></i></a>
 
-                        <a href="#" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#ModalEdit{{ $marca->id}}" ><i >Editar</i></a>
+                        @endcan
+                        @can('marcas.destroy')
                         <form action="{{ route('marcas.destroy', $marca->id) }}" method="post" style="display: inline-block;" class="formulario-eliminar">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger btn-sm" type="submit">
-                                <i >Eliminar</i>
+                            <button type="submit" rel="tooltip" class="btn btn-danger btn-sm btn-icon">
+                                <i class="now-ui-icons ui-1_simple-remove"></i>
                             </button>
                         </form>
+                        @endcan
                       </td>
                       @include('marcas.modal.edit')
                     </tr>

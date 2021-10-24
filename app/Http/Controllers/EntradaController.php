@@ -10,8 +10,10 @@ class EntradaController extends Controller
 {
     public function index(){
 
+        $proveedores = Proveedor::orderBy('nombre')->get();
+
         $entradas = Entrada::paginate(5);
-        return view('entradas.index', compact('entradas'));
+        return view('entradas.index', compact('entradas', 'proveedores'));
 
     }
 

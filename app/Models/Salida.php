@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\DB;
 
 class Salida extends Model
 {
@@ -29,5 +30,12 @@ class Salida extends Model
 
     function salidaMaterial(){
         return $this->hasMany(SalidaMaterial::class);
+    }
+
+    public static function obtenerDatosTrimestre(){
+        $datos = DB::table('salida_materiales')
+        ->select('')
+        ->get();
+        return $datos;
     }
 }

@@ -22,7 +22,7 @@ class MarcaController extends Controller
     public function store(Request $request){
 
         $request->validate([
-            'nombre' => 'required|min:3|max:20',
+            'nombre' => 'required|min:3|max:20|unique:marcas',
 
         ]);
 
@@ -52,13 +52,13 @@ class MarcaController extends Controller
         $data = $request->only('nombre');
 
         $marca->update($data);
-        return redirect()->route('marcas.index')->with('success', 'Usuario actualizado correctamente');
+        return redirect()->route('marcas.index')->with('success', 'Marca actualizada correctamente');
     }
 
     public function destroy(Marca $marca){
 
         $marca->delete();
-        return back()->with('success', 'marca eliminado correctamente');
+        return back()->with('success', 'Marca eliminado correctamente');
 
     }
 }

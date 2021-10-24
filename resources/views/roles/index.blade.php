@@ -10,6 +10,13 @@
   <div class="content">
     <div class="row">
       <div class="col-md-12">
+        @if (session('info'))
+        <div class="alert alert-success">
+            {{session('info')}}
+        </div>
+        @endif
+
+
         <div class="card">
           <div class="card-header">
             <div class="text-right">
@@ -36,7 +43,7 @@
                     <td>{{ $role->guard_name }}</td>
                     <td>
                       @forelse ($role->permissions as $permission )
-                        <span class="badge badge-info"> {{ $permission->name }} </span>
+                        <span class="badge badge-info"> {{ $permission->description }} </span>
                       @empty
                         <span class="badge badge-danger"> No permissions added</span>
                       @endforelse

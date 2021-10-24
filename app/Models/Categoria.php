@@ -25,4 +25,11 @@ class Categoria extends Model
     function obra(){
         return $this->hasMany(Obra::class);
     }
+
+    public static function obtenerDato($id){
+        $dato=Categoria::select('nombre')
+        ->where('id','=',$id )
+        ->first();
+        return $dato->nombre;
+    }
 }

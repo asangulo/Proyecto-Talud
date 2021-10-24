@@ -13,8 +13,10 @@
         <div class="card">
           <div class="card-header">
             <div class="text-right">
-              <a href="{{ route('salidas.create') }}" class="btn btn-sm btn-primary">Añadir salida</a>
-            </div>
+                @can('salidasMateriales.create')
+                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#ModalCreate">Añadir Salida Material</a>
+                @endcan
+              </div>
             <h4 class="card-title"> Salida Material </h4>
           </div>
           <div class="card-body">
@@ -24,7 +26,7 @@
                   <tr>
                   <th>ID</th>
                   <th>Estado</th>
-                  <th>Cantidad</th>
+                  <th>Cantidad Retirada</th>
                   <th>Material</th>
                   <th>ID Salida</th>
                   <th class="text-right">Acciones</th>
@@ -38,16 +40,22 @@
                     <td>{{ $salidaMaterial->material->nombre }}</td>
                     <td>{{ $salidaMaterial->salida->fecha }}</td>
                     <td class="text-right" >
+                        @can('salidasMateriales.edit')
+                        <a href="#"  class="btn btn-gray btn-sm btn-icon" data-toggle="modal" data-target="#ModalEdit{{ $salidaMaterial->id}}" > <i class="now-ui-icons ui-2_settings-90"></i></a>
 
-                      <a href="{{ route('salidaMateriales.edit', $salidaMaterial->id) }}" class="btn btn-warning btn-sm"><i >Editar</i></a>
-                      <form action="{{ route('salidaMateriales.destroy', $salidaMaterial->id) }}" method="post" style="display: inline-block; " onsubmit="return confirm('seguro ?')">
-                          @csrf
-                          @method('DELETE')
-                          <button class="btn btn-danger btn-sm" type="submit">
-                                <i >Eliminar</i>
-                          </button>
-                      </form>
+                        @endcan
+                        @can('salidasMateriales.destroy')
+                        <form action="{{ route('salidaMateriales.destroy', $salidaMaterial->id) }}" method="post" style="display: inline-block; " onsubmit="return confirm('seguro ?')">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger btn-sm" type="submit">
+                                  <i >Eliminar</i>
+                            </button>
+                        </form>
+                        @endcan
+
                       </td>
+                      @include('SalidaMateriales.modal.edit')
                     </tr>
                     @empty
                     No hay registros
@@ -63,4 +71,5 @@
       </div>
     </div>
   </div>
+  @include('salidaMateriales.modal.create')
 @endsection

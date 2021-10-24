@@ -45,6 +45,11 @@ Route::group( ['middleware' => 'auth'], function(){
 
     Route::resource('permissions', App\Http\Controllers\PermissionController::class)->names('permissions');
     Route::resource('roles', App\Http\Controllers\RolController::class)->names('roles');
+
+    // Route::get('datatable/usuarios', 'DatatableController@Usuario')->name('datatable.usuario');
+    Route::get('ajax/request/materiales',[App\Http\Controllers\MaterialController::class,'datatableMateriales'])->name('ajax.request.materiales');
+    Route::get('ajax/request/obras',[App\Http\Controllers\ObraController::class,'datatableObras'])->name('ajax.request.obras');
+
 });
 
 

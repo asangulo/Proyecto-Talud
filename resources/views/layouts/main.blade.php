@@ -19,6 +19,8 @@
   <link href="{{ asset('/css/now-ui-dashboard.css') }}" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="{{ asset('/demo/demo.css') }}" rel="stylesheet" />
+  @yield('css')
+
 </head>
 
 <body class="{{ $class ?? '' }}">
@@ -47,6 +49,8 @@
   <script src="{{ asset('/demo/demo.js') }}"></script>
   @stack('js')
   @yield('js')
+
+
 </body>
 
 </html>

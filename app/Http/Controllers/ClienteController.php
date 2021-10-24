@@ -23,8 +23,11 @@ class ClienteController extends Controller
 
         $request->validate([
             'nombre' => 'required|min:3|max:20',
+            'apellido' => 'required|min:3|max:20',
             'correo' => 'required|email|unique:clientes',
-            'clave' => 'required|numeric',
+            'celular' => 'required|unique:clientes',
+            'clave' => 'required|numeric|unique:clientes',
+            'direcccion' => 'required|min:3|max:20',
 
         ]);
 
@@ -50,11 +53,11 @@ class ClienteController extends Controller
 
     public function update(Request $request, Cliente $cliente){
 
-        $data = $request->only('nombre', 'peso', 'tamaño', 'cantidad', 'tipo_id', 'marca_id', 'proveedor_id', 'estado');
+        $data = $request->only('nombre', 'apellido', 'correo', 'celular', 'clave', 'direcccion');
 
 
-        $cliente->update();
-        return redirect()->route('clientes.index')->with('success', 'Usuario actualizado correctamente');
+        $cliente->update($data);
+        return redirect()->route('clientes.index')->with('success', 'cliente actualizado correctamente');
     }
 
     public function destroy(Cliente $cliente){

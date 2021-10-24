@@ -1,5 +1,8 @@
-@extends('layouts.main', ['page' => __('Crearproveedores'), 'pageSlug' => 'Crearproveedores'])
-
+@extends('layouts.main', [
+    'namePage' => 'proveedores',
+    'class' => 'sidebar-mini',
+    'activePage' => 'proveedores',
+  ])
 
 @section('content')
 <div class="card">

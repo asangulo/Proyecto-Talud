@@ -16,7 +16,7 @@ class CreateSalidaMaterialesTable extends Migration
         Schema::create('salida_materiales', function (Blueprint $table) {
             $table->id();
             $table->string('estado');
-            $table->string('cantidad');
+            $table->integer('cantidad');
             $table->foreignId('material_id');
             $table->foreignId('salida_id');
             $table->timestamps();

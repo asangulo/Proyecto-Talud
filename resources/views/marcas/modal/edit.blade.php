@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="text-center">
-                        <button type="submit" class="btn btn-success mt-4">{{ __('Actualizar') }}</button>
+                        <button type="submit" class="btn btn-primary mt-4">{{ __('Actualizar') }}</button>
                     </div>
                 </div>
             </div>

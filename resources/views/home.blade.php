@@ -6,157 +6,74 @@
 ])
 
 @section('content')
-  <div class="panel-header panel-header-lg">
-    <canvas id="bigDashboardChart"></canvas>
+<div class="panel-header" style="height: 2px;
+padding-top: 30px;
+padding-bottom: 45px;">
+
+</div>
+<br>
+  <div class="row">
+      <div class="col-lg-12">
+      </div>
   </div>
   <div class="content">
     <div class="row">
-      {{-- <div class="col-lg-4">
-        <div class="card card-chart">
-          <div class="card-header">
-            <h5 class="card-category">Global Sales</h5>
-            <h4 class="card-title">Shipped Products</h4>
-            <div class="dropdown">
-              <button type="button" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" data-toggle="dropdown">
-                <i class="now-ui-icons loader_gear"></i>
-              </button>
-              <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-                <a class="dropdown-item text-danger" href="#">Remove Data</a>
-              </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Cantidad de Entradas - Ultimos cinco dias</h5>
+                    <div class="comment-widgets scrollable ps-container ps-theme-default ps-active-y" style="height:560px;" data-ps-id="6c59f569-947c-0835-466d-192808c3ac96">
+                    <!-- Comment Row -->
+
+                    <canvas id="entradas_grafico" width="300px" height="200px"></canvas>
+                    <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; right: 3px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
+                </div>
+
             </div>
-          </div>
-          <div class="card-body">
-            <div class="chart-area">
-              <canvas id="lineChartExample"></canvas>
-            </div>
-          </div>
-          <div class="card-footer">
-            <div class="stats">
-              <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
-            </div>
-          </div>
         </div>
-      </div>
-      <div class="col-lg-4 col-md-6">
-        <div class="card card-chart">
-          <div class="card-header">
-            <h5 class="card-category">2018 Sales</h5>
-            <h4 class="card-title">All products</h4>
-            <div class="dropdown">
-              <button type="button" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" data-toggle="dropdown">
-                <i class="now-ui-icons loader_gear"></i>
-              </button>
-              <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-                <a class="dropdown-item text-danger" href="#">Remove Data</a>
-              </div>
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Cantidad de Salidas</h5>
+                    <div class="comment-widgets scrollable ps-container ps-theme-default ps-active-y" style="height:560px;" data-ps-id="6c59f569-947c-0835-466d-192808c3ac96">
+                    <!-- Comment Row -->
+
+                    <canvas id="salidas_grafico" width="300px" height="200px"></canvas>
+                    <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; right: 3px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
+                </div>
+
             </div>
-          </div>
-          <div class="card-body">
-            <div class="chart-area">
-              <canvas id="lineChartExampleWithNumbersAndGrid"></canvas>
-            </div>
-          </div>
-          <div class="card-footer">
-            <div class="stats">
-              <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
-            </div>
-          </div>
         </div>
-      </div>
-      <div class="col-lg-4 col-md-6">
-        <div class="card card-chart">
-          <div class="card-header">
-            <h5 class="card-category">Email Statistics</h5>
-            <h4 class="card-title">24 Hours Performance</h4>
-          </div>
-          <div class="card-body">
-            <div class="chart-area">
-              <canvas id="barChartSimpleGradientsNumbers"></canvas>
-            </div>
-          </div>
-          <div class="card-footer">
-            <div class="stats">
-              <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
-            </div>
-          </div>
-        </div>
-      </div> --}}
+
     </div>
-    {{-- <div class="row">
+    <div class="row">
       <div class="col-md-6">
         <div class="card  card-tasks">
           <div class="card-header ">
-            <h5 class="card-category">Backend development</h5>
-            <h4 class="card-title">Tasks</h4>
+            {{-- <h5 class="card-category"></h5> --}}
+            <h4 class="card-title">Top 5 Materiales</h4>
           </div>
           <div class="card-body ">
             <div class="table-full-width table-responsive">
               <table class="table">
                 <tbody>
-                  <tr>
-                    <td>
-                      <div class="form-check">
-                        <label class="form-check-label">
-                          <input class="form-check-input" type="checkbox" checked>
-                          <span class="form-check-sign"></span>
-                        </label>
-                      </div>
-                    </td>
-                    <td class="text-left">Sign contract for "What are conference organizers afraid of?"</td>
+                     @foreach ($materiales as $material)
+                <tr>
+                    <td class="text-left">{{ $material->nombre }}</td>
                     <td class="td-actions text-right">
                       <button type="button" rel="tooltip" title="" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
-                        <i class="now-ui-icons ui-2_settings-90"></i>
+                        <i class="now-ui-icons ">{{ $material->cantidad}}</i>
                       </button>
-                      <button type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
+                      {{-- <button type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
                         <i class="now-ui-icons ui-1_simple-remove"></i>
-                      </button>
+                      </button> --}}
                     </td>
-                  </tr>
-                  <tr>
                     <td>
-                      <div class="form-check">
-                        <label class="form-check-label">
-                          <input class="form-check-input" type="checkbox">
-                          <span class="form-check-sign"></span>
-                        </label>
-                      </div>
+                        {{-- {{ $materiales->nombre }} --}}
                     </td>
-                    <td class="text-left">Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                    <td class="td-actions text-right">
-                      <button type="button" rel="tooltip" title="" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
-                        <i class="now-ui-icons ui-2_settings-90"></i>
-                      </button>
-                      <button type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
-                        <i class="now-ui-icons ui-1_simple-remove"></i>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="form-check">
-                        <label class="form-check-label">
-                          <input class="form-check-input" type="checkbox" checked>
-                          <span class="form-check-sign"></span>
-                        </label>
-                      </div>
-                    </td>
-                    <td class="text-left">Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                    </td>
-                    <td class="td-actions text-right">
-                      <button type="button" rel="tooltip" title="" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
-                        <i class="now-ui-icons ui-2_settings-90"></i>
-                      </button>
-                      <button type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
-                        <i class="now-ui-icons ui-1_simple-remove"></i>
-                      </button>
-                    </td>
-                  </tr>
+                </tr>
+                 @endforeach
                 </tbody>
               </table>
             </div>
@@ -172,113 +89,157 @@
       <div class="col-md-6">
         <div class="card">
           <div class="card-header">
-            <h5 class="card-category">All Persons List</h5>
-            <h4 class="card-title"> Employees Stats</h4>
+            <h4 class="card-title"> Descripciones de las Obras </h4>
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table">
+              <table class="table" id="obras">
                 <thead class=" text-primary">
-                  <th>
-                    Name
-                  </th>
-                  <th>
-                    Country
-                  </th>
-                  <th>
-                    City
-                  </th>
-                  <th class="text-right">
-                    Salary
-                  </th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      Dakota Rice
-                    </td>
-                    <td>
-                      Niger
-                    </td>
-                    <td>
-                      Oud-Turnhout
-                    </td>
-                    <td class="text-right">
-                      $36,738
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Minerva Hooper
-                    </td>
-                    <td>
-                      Curaçao
-                    </td>
-                    <td>
-                      Sinaai-Waas
-                    </td>
-                    <td class="text-right">
-                      $23,789
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Sage Rodriguez
-                    </td>
-                    <td>
-                      Netherlands
-                    </td>
-                    <td>
-                      Baileux
-                    </td>
-                    <td class="text-right">
-                      $56,142
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Doris Greene
-                    </td>
-                    <td>
-                      Malawi
-                    </td>
-                    <td>
-                      Feldkirchen in Kärnten
-                    </td>
-                    <td class="text-right">
-                      $63,542
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Mason Porter
-                    </td>
-                    <td>
-                      Chile
-                    </td>
-                    <td>
-                      Gloucester
-                    </td>
-                    <td class="text-right">
-                      $78,615
-                    </td>
-                  </tr>
-                </tbody>
+                    <tr>
+                      <th>ID</th>
+                      <th>Fecha Inicio</th>
+                      <th>Fecha Entrega</th>
+
+                      <th>Descripcion</th>
+                    <th class="text-right">Nombre</th>
+                  </thead>
               </table>
             </div>
           </div>
         </div>
       </div>
-    </div> --}}
+    </div>
   </div>
 @endsection
 
 @push('js')
-  {{-- <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-      demo.initDashboardPageCharts();
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+    $('#obras').DataTable({
+                "language": {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
+                "order": [[ 0, "asc" ]],
+                "processing": true,
+                "responsive": true,
+                "serverSide": true,
+                "ajax": "{{ route('ajax.request.obras')}}",
+                "columns":[
+                {"data":"id"},
+                {"data":"fechaInicio"},
+                {"data":"fechaEntrega"},
+                {"data":"descripcion"},
+                {"data":"nombre"},
+                ],
 
     });
-  </script> --}}
+</script>
+
+<script>
+const ctx = document.getElementById('entradas_grafico').getContext('2d');
+let diaEntrada=@json($dias_entrada);
+let tagPrimerDia=diaEntrada[0][0]['primer_dia'];
+let tagSegundoDia=diaEntrada[1][0]['segundo_dia'];
+let tagTercerDia=diaEntrada[2][0]['tercer_dia'];
+let tagCuartoDia=diaEntrada[3][0]['cuarto_dia'];
+let tagQuintoDia=diaEntrada[4][0]['quinto_dia'];
+const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Hace 5 dias', 'Hace 4 dias', 'Hace 3 dias', 'Antes de Ayer', 'Ayer'],
+        datasets: [{
+            label:'Estadistica por Dia',
+            data: [tagPrimerDia, tagSegundoDia, tagTercerDia, tagCuartoDia, tagQuintoDia],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+
+const ctx_salida = document.getElementById('salidas_grafico').getContext('2d');
+let dias_salidas=@json($dias_salidas);
+let tagPrimerDiaSalida=dias_salidas[0][0]['primer_dia'];
+let tagSegundoDiaSalida=dias_salidas[1][0]['segundo_dia'];
+let tagTercerDiaSalida=dias_salidas[2][0]['tercer_dia'];
+let tagCuartoDiaSalida=dias_salidas[3][0]['cuarto_dia'];
+let tagQuintoDiaSalida=dias_salidas[4][0]['quinto_dia'];
+const myChartSalida = new Chart(ctx_salida, {
+    type: 'bar',
+    data: {
+        labels: ['Hace 5 dias', 'Hace 4 dias', 'Hace 3 dias', 'Antes de Ayer', 'Ayer'],
+        datasets: [{
+            label:'Estadistica por Dia',
+            data: [tagPrimerDiaSalida, tagSegundoDiaSalida, tagTercerDiaSalida, tagCuartoDiaSalida, tagQuintoDiaSalida],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 2, 32, 1)',
+                'rgba(54, 162, 35, 1)',
+                'rgba(255, 206, 186, 1)',
+                'rgba(75, 192, 292, 1)',
+                'rgba(153, 102, 55, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+
+
 @endpush
+
