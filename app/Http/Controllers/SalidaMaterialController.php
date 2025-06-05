@@ -31,6 +31,16 @@ class SalidaMaterialController extends Controller
     }
 
     public function store(Request $request){
+        // foreach ($request->all() as $req) {
+        //     SalidaMaterial::create([
+        //         'estado' =>$req['estado'],
+        //         'cantidad' =>$req['cantidad'],
+        //         'salida_id' =>$req['salida_id'],
+        //         'material_id' =>$req['material_id']
+        //     ]);
+        //     dd($req);
+        // }
+
 
         $cant_permitida=EntradaMaterial::getCant($request->material_id);
         $request->validate([
@@ -64,12 +74,17 @@ class SalidaMaterialController extends Controller
 
     }
 
-    public function update(Request $request, SalidaMaterial $salidaMaterial){
+    public function update(Request $request, $id){
 
-        $data = $request->only('material_id', 'salida_id');
+        $salidaMaterial= SalidaMaterial::find($id);
+        $salidaMaterial->estado = $request->input('estado');
+        $salidaMaterial->cantidad = $request->input('cantidad');
+        $salidaMaterial->material_id = $request->input('material_id');
+        $salidaMaterial->salida_id = $request->input('salida_id');
 
-        $salidaMaterial->update($data);
-        return redirect()->route('salidaMateriales.index')->with('success', 'SALIDA MATERIAL actualizado correctamente');
+
+        $salidaMaterial->save();
+        return redirect()->route('salidaMateriales.index')->with('success', 'salida Material actualizado correctamente');
     }
 
     public function destroy(SalidaMaterial $salidaMaterial){

@@ -75,6 +75,21 @@
 @section('js')
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if (!$errors->isEmpty())
+    @if ($errors->has('post'))
+        <script>
+            $(function (){
+            $('#ModalCreate').modal('show');
+            });
+        </script>
+    @else
+        <script>
+            $(function() {
+                $('#ModalEdit').modal('show')
+            });
+        </script>
+    @endif
+@endif
 
 @if (session('success') == 'marca eliminado correctamente')
    <script>

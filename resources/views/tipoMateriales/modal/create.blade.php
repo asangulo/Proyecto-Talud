@@ -13,7 +13,9 @@
                     <div class="pl-lg-4">
                         <div class="form-group{{ $errors->has('nombre') ? ' has-danger' : '' }}">
                             <label class="form-control-label" for="input-name">{{ __('Nombre') }}</label>
-                            <input type="text" name="nombre" id="input-name" class="form-control form-control-alternative{{ $errors->has('nombre') ? ' is-invalid' : '' }}" placeholder="{{ __('Ingrese el nombre de la marca ') }}" value="{{ old('nombre') }}" autofocus>
+                            <input type="text" name="nombre" id="input-name" class="form-control form-control-alternative{{ $errors->has('nombre') ? ' is-invalid' : '' }}"
+                            placeholder="{{ __('Ingrese el nombre del Tipo Material ') }}" value="{{ old('nombre') }}"
+                            required pattern="[A-Z-a-z]{3,20}" title="Letras sin números Tamaño mínimo: 5. Tamaño máximo: 20" />
 
                             @if ($errors->has('nombre'))
                                 <span class="invalid-feedback" role="alert">

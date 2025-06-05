@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
-
+use Illuminate\Support\Facades\DB;
 
 class Material extends Model
 {
@@ -42,4 +42,5 @@ class Material extends Model
     function entradaMaterial(){
         return $this->hasMany(EntradaMaterial::class);
     }
+
 }

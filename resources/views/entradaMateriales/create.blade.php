@@ -4,7 +4,7 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h5 class="title">{{ _('Crear marca') }}</h5>
+        <h5 class="title">{{ _('Crear entrada') }}</h5>
     </div>
     <form method="post" action="{{ route('entradaMateriales.store') }}" autocomplete="off">
         <div class="card-body">

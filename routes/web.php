@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,12 @@ Route::group( ['middleware' => 'auth'], function(){
     Route::get('ajax/request/materiales',[App\Http\Controllers\MaterialController::class,'datatableMateriales'])->name('ajax.request.materiales');
     Route::get('ajax/request/obras',[App\Http\Controllers\ObraController::class,'datatableObras'])->name('ajax.request.obras');
 
+    Route::get('/materiales/estado/{id}/{estado}',[App\Http\Controllers\MaterialController::class,'cambiar_estado']);
+
 });
+
+
+
+
 
 

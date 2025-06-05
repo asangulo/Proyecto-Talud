@@ -66,3 +66,21 @@
   </div>
   @include('tipoMateriales.modal.create')
 @endsection
+@section('js')
+@if (!$errors->isEmpty())
+    @if ($errors->has('post'))
+        <script>
+            $(function (){
+            $('#ModalCreate').modal('show');
+            });
+        </script>
+    @else
+        <script>
+            $(function() {
+                $('#ModalEdit').modal('show')
+            });
+        </script>
+    @endif
+@endif
+
+@endsection

@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Http\Requests\TipoMaterialRequest;
 use App\Models\TipoMaterial;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TipoMaterialController extends Controller
 {
     public function index(){
 
-        $tipoMateriales = TipoMaterial::paginate(5);
+        $tipoMateriales = TipoMaterial::paginate(15);
         return view('tipoMateriales.index', compact('tipoMateriales'));
 
     }
@@ -19,16 +22,18 @@ class TipoMaterialController extends Controller
         return view('tipoMateriales.create');
 
     }
-    public function store(Request $request){
+    public function store(TipoMaterialRequest $request){
 
-        $request->validate([
-            'nombre' => 'required|min:3|max:20|unique:tipo_materiales',
-        ]);
+        // $request->validate([
+        //     'nombre' => 'required|min:3|max:20|unique:tipo_materiales',
+        // ]);
 
         TipoMaterial::create($request->all());
 
+        Alert::success('Tipo Material creado correctamente');
 
-         return redirect()->route('tipoMateriales.index')->with('success', 'Tipo Material creado correctamente');
+
+         return redirect()->route('tipoMateriales.index');
         //return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA
 
     }
@@ -45,13 +50,17 @@ class TipoMaterialController extends Controller
 
     }
 
-    public function update(Request $request, TipoMaterial $tipoMaterial){
+    public function update(Request $request, $id){
 
-        // $marca=Marca::findOrFail($marca);
-        $data = $request->only('nombre');
 
-        $tipoMaterial->update($data);
-        return redirect()->route('tipoMateriales.index')->with('success', 'tipo$tipoMaterial actualizada correctamente');
+        $tipoMaterial=TipoMaterial::find($id);
+        $tipoMaterial->nombre = $request->input('nombre');
+
+
+        $tipoMaterial->save();
+        Alert::success('Tipo Material actualizado');
+
+        return redirect()->route('tipoMateriales.index');
     }
 
     public function destroy(TipoMaterial $tipoMaterial){

@@ -132,7 +132,7 @@
           </a>
         </li>
         @endcan
-        @can('salidasMaterial')
+        @can('salidasMateriales.index')
         <li class = " @if ($activePage == 'salidaMaterial') active @endif">
           <a href="{{ route('salidaMateriales.index') }}">
             <i class="now-ui-icons ui-1_bell-53"></i>

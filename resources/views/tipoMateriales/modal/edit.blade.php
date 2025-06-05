@@ -13,7 +13,9 @@
                 <div class="modal-body">
                     <div class="form-group{{ $errors->has('nombre') ? ' has-danger' : '' }}">
                         <label class="form-control-label" for="input-nombre">{{ __('nombre') }}</label>
-                        <input type="text" name="nombre" id="input-nombre" class="form-control form-control-alternative{{ $errors->has('nombre') ? ' is-invalid' : '' }}" value="{{  old('nombre', $tipoMaterial->nombre )}}" autofocus>
+                        <input type="text" name="nombre" id="input-nombre" class="form-control form-control-alternative{{ $errors->has('nombre') ? ' is-invalid' : '' }}"
+                        value="{{  old('nombre', $tipoMaterial->nombre )}}"
+                        required pattern="[A-Z-a-z]{3,20}" title="Letras sin números Tamaño mínimo: 5. Tamaño máximo: 20"/>
 
                         @if ($errors->has('nombre'))
                             <span class="invalid-feedback" role="alert">

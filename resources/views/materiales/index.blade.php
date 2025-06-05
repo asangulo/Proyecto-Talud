@@ -4,15 +4,20 @@
     'activePage' => 'materiales',
   ])
 
-
+@section('css')
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css">
+@endsection
 
 @section('content')
+@include('materiales.modal.create')
+{{-- @include('materiales.modal.edit') --}}
   <div class="panel-header panel-header-sm">
   </div>
   <div class="content">
     <div class="row">
       <div class="col-md-12">
         <div class="card">
+
           <div class="card-header">
             <div class="text-right">
                 @can('materiales.create')
@@ -31,33 +36,48 @@
                     <th>Nombre</th>
                     <th>Peso</th>
                     <th>Tamaño</th>
-                    <th>Cantidad</th>
+                    <th><strong>Cantidad</strong></th>
                     <th>Tipo</th>
                     <th>Marca</th>
                     <th>Proveedor</th>
                     <th>Estado</th>
 
-                  <th class="text-right">Acciones</th>
+                  <th class="text-right">acciones</th>
                 </thead>
-                <tbody>
-                </tbody>
-
               </table>
+
             </div>
           </div>
-          <div class="card-footer mr-auto">
-              {{ $materiales->links() }}
-          </div>
+
         </div>
       </div>
     </div>
   </div>
-  @include('materiales.modal.create')
+
 @endsection
 
 @section('js')
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script>
+
+@if (!$errors->isEmpty())
+    @if ($errors->has('post'))
+        <script>
+            $(function (){
+            $('#ModalCreate').modal('show');
+            });
+        </script>
+    @else
+        <script>
+            $(function() {
+                $('#ModalEdit').modal('show')
+            });
+        </script>
+    @endif
+@endif
+
 
 
 <script>
@@ -101,8 +121,7 @@
                 ],
 
     });
+
 </script>
-
-
 
 @endsection

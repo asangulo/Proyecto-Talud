@@ -34,7 +34,7 @@
                         <i class="now-ui-icons users_circle-08"></i>
                     </div>
                     </span>
-                    <input class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Correo') }}" type="email" name="email" value="{{ old('email', 'admin@example.com') }}" required autofocus>
+                    <input class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Correo') }}" type="email" name="email" value="{{ old('email', 'admin@gmail.com') }}" required autofocus>
                 </div>
                 @if ($errors->has('email'))
                     <span class="invalid-feedback" style="display: block;" role="alert">
@@ -47,7 +47,7 @@
                         <i class="now-ui-icons objects_key-25"></i></i>
                     </div>
                     </div>
-                    <input placeholder="Password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="{{ __('Contraseña') }}" type="password" value="secret" required>
+                    <input class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="{{ __('Contraseña') }}" type="password" value="secret" required>
                 </div>
                 @if ($errors->has('password'))
                     <span class="invalid-feedback" style="display: block;" role="alert">

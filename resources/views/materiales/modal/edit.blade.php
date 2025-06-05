@@ -1,7 +1,7 @@
-<form action="{{ route('materiales.update', $id )}}" method="post" enctype="multipart/form-data">
+<form id="materiales" action="{{ route('materiales.update', $material->id  )}}" method="post" enctype="multipart/form-data">
     {{ method_field('patch')}}
     {{ csrf_field() }}
-    <div class="modal fade text-left" id="ModalEdit{{ $id}}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade text-left" id="ModalEdit{{ $id }}" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">

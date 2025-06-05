@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MarcaRequest;
 use App\Models\Marca;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MarcaController extends Controller
 {
     public function index(){
 
-        $marcas = Marca::paginate(5);
+        $marcas = Marca::paginate(15);
         return view('marcas.index', compact('marcas'));
 
     }
@@ -19,17 +21,17 @@ class MarcaController extends Controller
         return view('marcas.create');
 
     }
-    public function store(Request $request){
+    public function store(MarcaRequest $request){
 
-        $request->validate([
-            'nombre' => 'required|min:3|max:20|unique:marcas',
+        // $request->validate([
+        //     'nombre' => 'required|min:3|max:20|unique:marcas',
 
-        ]);
+        // ]);
 
         Marca::create($request->all());
+        Alert::success('Marca creada correctamente');
 
-
-         return redirect()->route('marcas.index')->with('success', 'Marca creada correctamente');
+         return redirect()->route('marcas.index');
         //return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA
 
     }
@@ -52,7 +54,8 @@ class MarcaController extends Controller
         $data = $request->only('nombre');
 
         $marca->update($data);
-        return redirect()->route('marcas.index')->with('success', 'Marca actualizada correctamente');
+        Alert::success('Marca actualizada Correctamente');
+        return redirect()->route('marcas.index');
     }
 
     public function destroy(Marca $marca){

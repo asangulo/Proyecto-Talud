@@ -49,7 +49,10 @@
   <script src="{{ asset('/demo/demo.js') }}"></script>
   @stack('js')
   @yield('js')
-
+  <script src="sweetalert2.all.min.js"></script>
+  @include('sweetalert::alert')
+  @include('notify::components.notify')
+    @notifyJs
 
 </body>
 
