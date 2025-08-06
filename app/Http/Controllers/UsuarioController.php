@@ -24,26 +24,30 @@ class UsuarioController extends Controller
 
     }
 
-    public function store( UserCreateRequest $request){
+    public function store(UserCreateRequest $request)
+{
+    $request->validate([
+        'name' => 'required|min:3|max:10',
+        'email' => 'required|email|unique:users',
+        'password' => 'required',
+    ]);
 
-        $request->validate([
-            'name' => 'required|min:3|max:10',
-            'email' => 'required|email|unique:users',
-            'password' =>'required',
+    $usuario = User::create($request->only('name', 'email') + [
+        'password' => bcrypt($request->input('password')),
+    ]);
 
+    // Si es AJAX, responde con JSON
+    if ($request->ajax()) {
+        return response()->json([
+            'success' => true,
+            'message' => 'Usuario creado correctamente',
+            'usuario' => $usuario,
         ]);
-
-        $usuario = User::create($request->only('name','email')
-        + [
-            'password' => bcrypt($request->input('password')),
-        ]);
-
-        $roles = $request->input('roles', []);
-        $usuario->syncRoles($roles);
-        return redirect()->route('usuarios.index', $usuario->id)->with('success', 'Usuario creado correctamente');
-        // return redirect()->back(); // QUE CUANDO CREAA NOS REDIRECCIONE A LA VITA
-
     }
+
+    // Si no es AJAX, redirige normalmente
+    return redirect()->route('usuarios.index')->with('success', 'Usuario creado correctamente');
+}
 
     public function show(User $usuario){
         //$usuario = User::findOrFail($id);

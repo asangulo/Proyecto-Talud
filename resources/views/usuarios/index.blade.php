@@ -19,10 +19,12 @@
         @endif
         <div class="card">
           <div class="card-header">
-            <div class="text-right">
-                @can('usuario.create')
+            <div class="text-right" id="mensaje">
+               <form action="" id="form-usuario">
+               @can('usuario.create')
                 <a href="{{ route('usuario.create')}}" class="btn btn-sm btn-primary" >Añadir Usario</a>
                 @endcan
+               </form>
             </div>
             <h4 class="card-title"> usuarios</h4>
           </div>
@@ -110,6 +112,25 @@
     });
 </script>
 
+<script>
+     $('#form-usuario').submit(function(e){
+       e.preventDefault();
+       $.ajax({
+           url: '/usuarios',
+           type: 'POST',
+           data: $(this).serialize(),
+           headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+           success: function(response){
+               $('#mensaje').html('<div class="alert alert-success">'+response.message+'</div>');
+               // Actualiza la tabla o la vista aquí sin recargar
+           },
+           error: function(xhr){
+               $('#mensaje').html('<div class="alert alert-danger">Ocurrió un error</div>');
+           }
+       });
+   });
+</script>
+
 
 
 @endsection
@@ -158,3 +179,4 @@
 </script>
 
 @endsection --}}
+
